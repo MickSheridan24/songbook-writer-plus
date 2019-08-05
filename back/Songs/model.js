@@ -13,15 +13,27 @@ const song = {
     return res[0];
   },
   create: async params => {
-    console.log("POST", params);
     const post = await client("songs")
       .insert({ title: params.title, artist: params.artist, text: params.text })
       .returning("*");
 
     return post[0];
   },
-  delete: function(id) {},
-  update: function(id, params) {}
+  delete: async id => {
+    const deletion = await client("songs")
+      .where("id", id)
+      .del()
+      .returning("*");
+    return deletion[0];
+  },
+  update: async (id, params) => {
+    const patch = await client("songs")
+      .where("id", id)
+      .update(params)
+      .returning("*");
+
+    return patch[0];
+  }
 };
 
 module.exports = song;

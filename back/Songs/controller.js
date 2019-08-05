@@ -10,11 +10,16 @@ router.get("/:id", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  res.send(req.body)
+  song.create(req.body).then(success => res.send(success));
 });
 
-router.patch("/:id", (req, res) => {});
+router.patch("/:id", (req, res) => {
+  console.log("patchin");
+  song.update(req.params.id, req.body).then(success => res.send(success));
+});
 
-router.delete("/:id", (req, res) => {});
+router.delete("/:id", (req, res) => {
+  song.delete(req.params.id).then(success => res.send(success));
+});
 
 module.exports = router;
