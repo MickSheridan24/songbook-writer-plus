@@ -14,7 +14,7 @@ const song = {
   },
   create: async params => {
     const post = await client("songs")
-      .insert({ title: params.title, artist: params.artist, text: params.text })
+      .insert(params)
       .returning("*");
 
     return post[0];
