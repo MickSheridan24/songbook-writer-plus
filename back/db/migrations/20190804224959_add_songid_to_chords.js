@@ -1,11 +1,11 @@
 exports.up = function(knex, Promise) {
   return knex.schema.table("chords", function(t) {
-    t.integer("songId").notNull();
+    t.integer("song_id");
   });
 };
 
 exports.down = function(knex, Promise) {
   return knex.schema.table("chords", function(t) {
-    t.dropColumn("songId");
+    t.dropColumn("song_id");
   });
 };

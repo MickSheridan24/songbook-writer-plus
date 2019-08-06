@@ -1,16 +1,21 @@
 const client = require("../db/knex");
+const Chord = require("../Chords/model");
 
-const song = {
+const Song = {
   all: async () => {
     const routines = await client.select().from("songs");
     return routines;
   },
-  get: async id => {
+  get: async (id, params = {}) => {
     const res = await client
       .select()
       .from("songs")
       .where("id", id);
-    return res[0];
+    const song = { ...res[0] };
+    if (params.getChords) {
+      song.chords = await Chord.all(id);
+    }
+    return song;
   },
   create: async params => {
     const post = await client("songs")
@@ -36,4 +41,4 @@ const song = {
   }
 };
 
-module.exports = song;
+module.exports = Song;

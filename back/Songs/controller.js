@@ -6,7 +6,7 @@ router.get("/", (req, res) => {
 });
 
 router.get("/:id", (req, res) => {
-  song.get(req.params.id).then(r => res.send(r));
+  song.get(req.params.id, { getChords: true }).then(r => res.send(r));
 });
 
 router.post("/", (req, res) => {
@@ -14,7 +14,6 @@ router.post("/", (req, res) => {
 });
 
 router.patch("/:id", (req, res) => {
-  console.log("patchin");
   song.update(req.params.id, req.body).then(success => res.send(success));
 });
 

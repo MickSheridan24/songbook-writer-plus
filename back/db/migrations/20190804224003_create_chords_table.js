@@ -5,7 +5,7 @@ exports.up = function(knex) {
         tbl.increments();
         tbl.string("note");
         tbl.string("aspect");
-        tbl.integer("noteNum");
+        tbl.integer("note_num");
         tbl.integer("line");
         tbl.integer("offset");
       });

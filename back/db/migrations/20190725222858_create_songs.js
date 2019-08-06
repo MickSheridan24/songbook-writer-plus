@@ -4,7 +4,7 @@ exports.up = function(knex) {
       return knex.schema.createTable("songs", tbl => {
         tbl.increments();
         tbl.string("title");
-        tbl.integer("userId");
+        tbl.integer("user_id");
         tbl.string("artist");
         tbl.string("text");
       });
