@@ -8,6 +8,12 @@ const Chord = {
       .from("chords")
       .where("song_id", songId);
     return chords;
+  },
+  create: async params => {
+    const chord = await client("chords")
+      .insert(params)
+      .returning("*");
+    return chord[0];
   }
 };
 

@@ -2,6 +2,7 @@ const router = require("express").Router();
 const song = require("./model");
 
 router.get("/", (req, res) => {
+  console.log("CONSOLE");
   song.all().then(r => res.send(r));
 });
 

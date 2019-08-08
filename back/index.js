@@ -16,6 +16,8 @@ app.use("/", function(req, res, next) {
 });
 
 app.use("/songs", routers.songs);
+app.use("/chords", routers.chords);
+app.use("/books", routers.books);
 
 module.exports = app;
 
