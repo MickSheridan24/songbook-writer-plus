@@ -1,6 +1,7 @@
 const express = require("express");
 
 const routers = require("./router");
+const restController = require("./RestController");
 
 const app = express();
 
@@ -15,9 +16,9 @@ app.use("/", function(req, res, next) {
   next();
 });
 
-app.use("/songs", routers.songs);
-app.use("/chords", routers.chords);
-app.use("/books", routers.books);
+app.use("/songs", routers.songs, restController("songs"));
+app.use("/chords", restController("chords"));
+app.use("/books", restController("books"));
 
 module.exports = app;
 
