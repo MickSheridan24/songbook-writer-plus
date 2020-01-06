@@ -1,4 +1,4 @@
-const client = require("../db/knex");
+import client from "../db/knex";
 
 type Book = {
   title: string;

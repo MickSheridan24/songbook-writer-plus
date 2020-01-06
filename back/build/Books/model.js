@@ -1,4 +1,4 @@
-const client = require("../db/knex");
+import client from "../db/knex";
 class Books {
     static async all() {
         const books = await client.select().from("books");
