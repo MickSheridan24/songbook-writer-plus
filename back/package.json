@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "tsc": "tsc",
-    "knex:migrate:make": "knex --knexfile knexfile.ts -x ts migrate:make",
-    "knex:migrate:latest": "knex --knexfile knexfile.ts migrate:latest",
-    "knex:migrate:rollback": "knex --knexfile knexfile.ts migrate:rollback"
+    "kxmake": "knex --knexfile knexfile.ts -x ts migrate:make",
+    "kxmigrate": "knex --knexfile knexfile.ts migrate:latest",
+    "kxroll": "knex --knexfile knexfile.ts migrate:rollback"
   },
   "author": "",
   "license": "ISC",

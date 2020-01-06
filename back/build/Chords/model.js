@@ -1,5 +1,5 @@
 // Serializer
-import client from "../db/knex";
+import client from "../db/client";
 class Chords {
     static async all(songId) {
         const chords = await client

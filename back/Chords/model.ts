@@ -1,5 +1,5 @@
 // Serializer
-import client from "../db/knex";
+import client from "../db/client";
 
 type Chord = {
   note: string;

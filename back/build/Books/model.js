@@ -1,4 +1,4 @@
-import client from "../db/knex";
+import client from "../db/client";
 class Books {
     static async all() {
         const books = await client.select().from("books");

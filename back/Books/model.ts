@@ -1,4 +1,4 @@
-import client from "../db/knex";
+import client from "../db/client";
 
 type Book = {
   title: string;
