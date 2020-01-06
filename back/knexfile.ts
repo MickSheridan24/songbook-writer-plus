@@ -1,4 +1,5 @@
 // Update with your config settings.
+require("ts-node/register");
 
 module.exports = {
   development: {
@@ -19,7 +20,9 @@ module.exports = {
   staging: {
     client: "postgresql",
     connection: {
-      database: "micksheridan"
+      database: "my_db",
+      user: "username",
+      password: "password"
     },
     pool: {
       min: 2,
