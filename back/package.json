@@ -7,7 +7,8 @@
     "tsc": "tsc",
     "kxmake": "knex --knexfile knexfile.ts -x ts migrate:make",
     "kxmigrate": "knex --knexfile knexfile.ts migrate:latest",
-    "kxroll": "knex --knexfile knexfile.ts migrate:rollback"
+    "kxroll": "knex --knexfile knexfile.ts migrate:rollback",
+    "dbmake": "node db/util/createMigration"
   },
   "author": "",
   "license": "ISC",
