@@ -1,7 +1,8 @@
-import client from "../db/client";
+import client from "../dbBench";
 import Chords from "../Chords/model";
 
 type Song = {
+  id: number;
   title: string;
   userId: number;
   artist: string;

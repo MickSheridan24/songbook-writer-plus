@@ -1,5 +1,4 @@
-// Serializer
-import client from "../db/client";
+import client from "../dbBench";
 
 type Chord = {
   note: string;
