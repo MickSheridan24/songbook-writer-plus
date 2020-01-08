@@ -21,11 +21,11 @@ const client = {
     }
   },
   do: async function (cb) {
-    const cxn = await DB.connect();
-    const ret = await cb(cxn);
-    if (cxn) {
-      cxn.done();
-    }
+    console.log("DOOBEDOOBEDOO");
+
+    let cxn = await DB.connect();
+    let ret = await cb(cxn);
+    if (cxn) cxn.done();
     return ret;
   }
 };

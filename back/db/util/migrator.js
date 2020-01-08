@@ -1,9 +1,10 @@
 const db = require("../dbConfig");
 const fs = require("fs");
+const QueryFile = require('pg-promise').QueryFile
 
 async function migrate() {
   const unmigrated = await identifyUnmigrated();
-  debugger;
+
   if (unmigrated) {
     debugger;
     var success = await activateMigrations(unmigrated);
@@ -16,9 +17,8 @@ async function migrate() {
 }
 
 async function updateMigrations() {
-  const q = "UPDATE migrations set status = true";
-
-  db.do(async cxn => {
+  const q = new QueryFile(process.cwd() + "/db/sql/UMT.sql", { minify: true })
+  await db.do(async cxn => {
     await cxn.any(q).catch(e => console.error(e));
   });
 }
@@ -27,6 +27,7 @@ async function identifyUnmigrated() {
   const q = "SELECT * FROM migrations where status = false";
   return await db.do(async cxn => {
     let unmigrated = await cxn.any(q).catch(e => console.error("ERROR in identifyUnmigrated(): ", e));
+    debugger;
     if (unmigrated.length > 0 && !validateMigrations(unmigrated)) {
       console.error("Couldn't validate results");
       unmigrated = null;
@@ -38,7 +39,7 @@ async function identifyUnmigrated() {
 
 async function activateMigrations(unmigrated) {
   const migrations = unmigrated.map(m => {
-    let path = process.cwd() + "/back/db/migrations/" + m.name + ".js";
+    let path = process.cwd() + "/db/migrations/" + m.name + ".js";
     return require(path)
   });
 
@@ -47,25 +48,27 @@ async function activateMigrations(unmigrated) {
 }
 
 async function runMigration(migration) {
-  db.do(async cxn => {
+  await db.do(async cxn => {
     await migration.up(cxn);
   });
 }
 
 function validateMigrations(mgs) {
-  console.log("Inactive Migrations: ", mgs);
   let valid = mgs.length > 0;
   if (valid) {
     mgs.forEach(m => {
-      let path = process.cwd() + "/back/db/migrations/" + m.name + ".js";
+      let path = process.cwd() + "/db/migrations/" + m.name + ".js";
       if (!fs.existsSync(path)) {
         valid = false;
       }
       else {
+
         let migration = require(path);
         if (!migration.up) valid = false;
       }
+
     });
+
   }
   return valid;
 }

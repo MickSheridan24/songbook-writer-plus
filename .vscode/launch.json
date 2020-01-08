@@ -7,7 +7,15 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "Create Migration",
+      "cwd": "${workspaceRoot}/back",
+      "program": "${workspaceRoot}/back/db/util/createMigration.js",
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "Migrate",
+      "cwd": "${workspaceRoot}/back",
       "program": "${workspaceRoot}/back/db/util/migrator.js",
     }
   ]
