@@ -27,7 +27,7 @@ async function identifyUnmigrated() {
   const q = "SELECT * FROM migrations where status = false";
   return await db.do(async cxn => {
     let unmigrated = await cxn.any(q).catch(e => console.error("ERROR in identifyUnmigrated(): ", e));
-    if (!validateMigrations(unmigrated)) {
+    if (unmigrated.length > 0 && !validateMigrations(unmigrated)) {
       console.error("Couldn't validate results");
       unmigrated = null;
     }
@@ -47,7 +47,6 @@ async function activateMigrations(unmigrated) {
 }
 
 async function runMigration(migration) {
-  debugger;
   db.do(async cxn => {
     await migration.up(cxn);
   });
@@ -68,8 +67,7 @@ function validateMigrations(mgs) {
       }
     });
   }
-  debugger;
   return valid;
 }
-debugger;
-migrate();
+migrate().then(s => process.exit());
+
