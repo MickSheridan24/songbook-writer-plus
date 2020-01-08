@@ -11,15 +11,23 @@ const configuration = {
 const DB = pgp(configuration);
 
 const client = {
-  connect: async function() {
+  connect: async function () {
     const cxn = await DB.connect();
     return cxn;
   },
-  close: async function(cxn) {
+  close: async function (cxn) {
     if (cxn) {
       cxn.done();
     }
+  },
+  do: async function (cb) {
+    const cxn = await DB.connect();
+    const ret = await cb(cxn);
+    if (cxn) {
+      cxn.done();
+    }
+    return ret;
   }
 };
 
-export default client;
+module.exports = client;

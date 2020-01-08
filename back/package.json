@@ -5,10 +5,8 @@
   "main": "index.js",
   "scripts": {
     "tsc": "tsc",
-    "kxmake": "knex --knexfile knexfile.ts -x ts migrate:make",
-    "kxmigrate": "knex --knexfile knexfile.ts migrate:latest",
-    "kxroll": "knex --knexfile knexfile.ts migrate:rollback",
-    "dbmake": "node db/util/createMigration"
+    "dbmake": "node db/util/createMigration",
+    "migrate": "node db/util/migrator"
   },
   "author": "",
   "license": "ISC",
