@@ -6,7 +6,8 @@
   "scripts": {
     "tsc": "tsc",
     "dbmake": "node db/util/createMigration",
-    "migrate": "node db/util/migrator"
+    "migrate": "node db/util/migrator",
+    "rollback": "node db/util/rollbacker"
   },
   "author": "",
   "license": "ISC",

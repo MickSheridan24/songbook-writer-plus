@@ -5,5 +5,5 @@ const config = { minify: true };
 
 module.exports = {
     MigrateAllUnmigrated: new QueryFile(path + "/MigrateAllUnmigrated.sql", config),
-    IdentifyMigrationsToBeRollbacked: new QueryFile(path + "/IdentifyToBeRollbacked", config)
+    IdentifyMigrationsToBeRollbacked: new QueryFile(path + "/IdentifyToBeRollbacked.sql", config)
 }
