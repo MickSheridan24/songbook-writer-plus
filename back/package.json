@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "tsc": "tsc",
-    "dbmake": "node db/util/createMigration",
+    "mignew": "node db/util/createMigration",
     "migrate": "node db/util/migrator",
     "rollback": "node db/util/rollbacker"
   },
