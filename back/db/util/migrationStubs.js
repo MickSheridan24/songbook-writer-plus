@@ -1,3 +1,0 @@
-const stubs = {};
-
-stubs.createTable = "";
