@@ -32,19 +32,8 @@ async function fetchMigrations() {
   })
 }
 
-async function performRollback(migrations) {
-  for (m of migrations) {
-    console.log("Rolling back ", m.name)
-    migration = require(process.cwd() + "/db/migrations/" + m.name + ".js");
-    await rollback(migration);
-  }
+const performRollback = require("./shared").performRollback;
 
-}
 
-async function rollback(migration) {
-  await db.do(async cxn => {
-    await migration.down(cxn);
-  })
-}
+start().then(s => process.exit());
 
-start().then(s => process.exit()); 

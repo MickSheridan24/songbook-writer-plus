@@ -6,6 +6,7 @@
   "scripts": {
     "tsc": "tsc",
     "mignew": "node db/util/createMigration",
+    "migkill": "node db/util/killMigration",
     "migrate": "node db/util/migrator",
     "rollback": "node db/util/rollbacker"
   },
