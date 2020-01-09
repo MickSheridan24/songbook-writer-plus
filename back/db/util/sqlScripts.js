@@ -2,9 +2,17 @@ const QueryFile = require('pg-promise').QueryFile
 const path = "../sql/";
 
 const config = { minify: true };
+const exp = {}
 
-module.exports = {
-    MigrateAllUnmigrated: new QueryFile(path + "/MigrateAllUnmigrated.sql", config),
-    IdentifyMigrationsToBeRollbacked: new QueryFile(path + "/IdentifyMigrationsToBeRollbacked.sql", config),
-    RollbackMostRecent: new QueryFile(path + "/RollbackMostRecent.sql", config)
+function addScript(name) {
+    exp[name] = new QueryFile(path + name + ".sql", config);
 }
+
+addScript("MigrateAllUnmigrated");
+addScript("IdentifyMigrationsToBeRollbacked");
+addScript("RollbackMostRecent");
+addScript("CreateTable");
+
+
+module.exports = exp;
+

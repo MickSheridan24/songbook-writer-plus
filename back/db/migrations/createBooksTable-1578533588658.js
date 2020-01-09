@@ -1,12 +1,18 @@
-async function up(cxn) {
-    const script =
-        "CREATE TABLE IF NOT EXISTS books (title varchar, userId int, year int, id int not null, Primary Key(id));";
+const cm = require("../util/crudMaster");
 
-    await cxn.any(script).catch(e => console.log(e));
+async function up(cxn) {
+
+
+    await cm.createTable(cxn, "books", (b) => {
+        b.string("title", { notNull: true });
+        b.int("year");
+        b.int("userId", { notNull: true })
+        b.id();
+    })
 }
 
 async function down(cxn) {
-    const script = "DROP TABLE books;";
+    const script = "DROP TABLE if exists books;";
 
     await cxn.any(script).catch(e => console.log(e));
 }

@@ -1,0 +1,1 @@
+CREATE TABLE IF NOT EXISTS $1:raw ($2:raw); 
