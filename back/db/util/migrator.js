@@ -1,6 +1,6 @@
 const db = require("../dbConfig");
 const fs = require("fs");
-const QueryFile = require('pg-promise').QueryFile
+const scripts = require("./sqlScripts");
 
 async function migrate() {
   const unmigrated = await identifyUnmigrated();
@@ -17,7 +17,7 @@ async function migrate() {
 }
 
 async function updateMigrations() {
-  const q = new QueryFile(process.cwd() + "/db/sql/UMT.sql", { minify: true })
+  const q = scripts.MigrateAllUnmigrated;
   await db.do(async cxn => {
     await cxn.any(q).catch(e => console.error(e));
   });
