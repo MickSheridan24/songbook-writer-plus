@@ -21,7 +21,7 @@ const client = {
     }
   },
   do: async function (cb) {
-    console.log("DOOBEDOOBEDOO");
+    console.log("Database Transaction");
 
     let cxn = await DB.connect();
     let ret = await cb(cxn);
