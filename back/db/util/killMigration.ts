@@ -1,8 +1,8 @@
 import { Cxn, Migration, MigrationLog } from "../../types/dbtypes";
 
-const db = require("../dbConfig");
-const rollback = require("./shared").performRollback
-const fs = require("fs")
+import db from "../dbConfig";
+import { performRollback as rollback } from "./shared"
+import fs from "fs";
 
 const migrationName = process.argv[2]
 
@@ -12,7 +12,7 @@ async function kill(name: string) {
     const rmv = remove(migration)
     await rb;
     await rmv;
-    fs.unlinkSync(process.cwd() + "/db/migrations/" + migration.name + ".js")
+    fs.unlinkSync(process.cwd() + "/db/migrations/" + migration.name + ".ts")
 
 }
 

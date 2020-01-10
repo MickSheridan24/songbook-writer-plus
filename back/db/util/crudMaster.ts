@@ -1,6 +1,6 @@
 import { Cxn } from "../../types/dbtypes";
 
-const scripts = require("./sqlScripts")
+import { CreateTable } from "./sqlScripts";
 
 type parserOps = {
     notNull?: boolean;
@@ -61,14 +61,14 @@ class ColumnParser {
 
 
 async function createTable(cxn: Cxn, name: string, columnCB: (_: ColumnParser) => void) {
+
     let cp = new ColumnParser();
     columnCB(cp);
     let columns = cp.parse();
-    await cxn.any(scripts.CreateTable, [name, columns]).catch(e => console.error("DBERROR in CrudMaster createTable", e))
+    console.log(columns)
+    await cxn.any(CreateTable, [name, columns]).catch(e => console.error("DBERROR in CrudMaster createTable", e))
 }
 
 
-
-module.exports = {
-    createTable
-}
+let cm = { createTable }
+export default cm;

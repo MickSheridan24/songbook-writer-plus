@@ -24,8 +24,8 @@ const DB = pgp(configuration);
 
 const client = {
   do: async function (cb: (_: Cxn) => any) {
-    // console.log("Database Transaction");
-    let cxn: Cxn = await DB.connect;
+    console.log("Database Transaction");
+    let cxn: Cxn = await DB.connect();
     let ret = await cb(cxn);
     if (cxn) cxn.done();
     return ret;

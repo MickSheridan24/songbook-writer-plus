@@ -1,7 +1,7 @@
 import db from "../dbConfig";
 import stubs from "./stubMaster";
 import { logDBError as log } from "./shared"
-import { StubFac } from "../../types/dbtypes"
+import { Cxn } from "../../types/dbtypes"
 const fs = require("fs");
 
 
@@ -24,7 +24,7 @@ async function createMigration(stub: string) {
   console.log("Creating Migration...")
   const datetime = Date.now();
   const migrationName = name + "-" + datetime
-  const path = "./db/migrations/" + migrationName + ".js";
+  const path = "./db/migrations/" + migrationName + ".ts";
 
   fs.writeFileSync(path, stub, (err: string) => log(err, "createMigration.writeFileSync"))
   await updateMigrationsTable(migrationName).then(s => s);
@@ -33,7 +33,7 @@ async function createMigration(stub: string) {
 
 async function updateMigrationsTable(name: string) {
   const q = "INSERT INTO migrations (name, migrationDate, status) VALUES ('" + name + "', NULL, false);"
-  await db.do(async cxn => {
+  await db.do(async (cxn: Cxn) => {
     await cxn.any(q).catch(e => console.error("ERROR inserting migration", e))
     return true;
   })

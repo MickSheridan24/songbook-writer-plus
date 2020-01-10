@@ -2,7 +2,7 @@ import { Resource } from "./modelTypes"
 
 type Cxn = {
     done(): void,
-    remains(): boolean,
+    any(_: string, __?: string | string[]): Promise<Resource[]>,
     any<Resource>(_: string, __?: string | string[]): Promise<Resource[]>,
     one<Resource>(_: string, __?: string | string[]): Promise<Resource>
 }

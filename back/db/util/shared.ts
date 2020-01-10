@@ -6,7 +6,7 @@ const path = process.cwd() + "/db/migrations/"
 async function performRollback(migrations: MigrationLog[]) {
     for (const m of migrations) {
         console.log("Rolling back ", m.name)
-        const migration: Migration = require(path + m.name + ".js");
+        const migration: Migration = require(path + m.name + ".ts");
         await rollback(migration);
     }
 
@@ -21,7 +21,7 @@ async function rollback(migration: Migration) {
 
 
 function logDBError(e: string, name: string) {
-    console.error("DBERROR in " + (name ?? "unnamed process") + ": " + e)
+    console.error("DBERROR in " + (name || "unnamed process") + ": " + e)
 }
 export {
     performRollback,

@@ -5,16 +5,18 @@
   "main": "index.js",
   "scripts": {
     "tsc": "tsc",
-    "mignew": "node db/util/createMigration",
-    "migkill": "node db/util/killMigration",
-    "migrate": "node db/util/migrator",
-    "rollback": "node db/util/rollbacker"
+    "mignew": "ts-node db/util/createMigration",
+    "migkill": "ts-node db/util/killMigration",
+    "migrate": "ts-node db/util/migrator",
+    "rollback": "ts-node db/util/rollbacker"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "pg": "^7.9.0",
-    "ts-node": "^8.1.0",
-    "typescript": "^3.3.4000"
+    "express": "^4.17.1",
+    "pg": "^7.17.0",
+    "pg-promise": "^10.3.2",
+    "ts-node": "^8.6.0",
+    "typescript": "^3.7.4"
   }
 }

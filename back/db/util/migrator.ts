@@ -2,7 +2,7 @@ import db from "../dbConfig";
 import fs from "fs";
 import { MigrateAllUnmigrated } from "./sqlScripts";
 import { MigrationLog, Migration } from "../../types/dbtypes";
-import { Resource } from "../../types/modelTypes";
+
 
 const path = process.cwd() + "/db/migrations/"
 
@@ -42,7 +42,7 @@ async function identifyUnmigrated() {
 
 async function activateMigrations(unmigrated: MigrationLog[]) {
   const migrations: Migration[] = unmigrated.map(m => {
-    return require(path + m.name + ".js")
+    return require(path + m.name + ".ts")
   });
 
   migrations.forEach(m => runMigration(m).then(r => r))
@@ -59,14 +59,17 @@ function validateMigrations(mgs: MigrationLog[]) {
   let valid = mgs.length > 0;
   if (valid) {
     mgs.forEach(m => {
-      let path = process.cwd() + "/db/migrations/" + m.name + ".js";
-      if (!fs.existsSync(path)) {
+      if (!fs.existsSync(path + m.name + ".ts")) {
         valid = false;
+        console.error("File Doesn't Exist")
       }
       else {
 
-        let migration = require(path);
-        if (!migration.up) valid = false;
+        let migration = require(path + m.name + ".ts");
+        if (!migration.up) {
+          console.error("File Doesn't have an up() method")
+          valid = false;
+        }
       }
 
     });
