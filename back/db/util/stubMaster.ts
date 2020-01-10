@@ -1,7 +1,6 @@
-const stubs = {};
-
-stubs.createTable = (name) => {
-    return `const cm = require("../util/crudMaster");  
+const stubs = {
+    createTable: (name: string) => {
+        return `const cm = require("../util/crudMaster");  
     async function up(cxn) {
     await cm.createTable(cxn, "${name}", (b) => {
         b.id();
@@ -13,7 +12,8 @@ stubs.createTable = (name) => {
     }
 
     module.exports = { up: up, down: down };`
-}
+    }
+};
 
 
-module.exports = stubs;
+export default stubs;

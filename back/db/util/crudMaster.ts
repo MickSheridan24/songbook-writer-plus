@@ -1,6 +1,17 @@
+import { Cxn } from "../../types/dbtypes";
+
 const scripts = require("./sqlScripts")
 
+type parserOps = {
+    notNull?: boolean;
+}
+
 class ColumnParser {
+    _parsed: string;
+    _columns: string[];
+    _postConfigs: string[];
+
+
     constructor() {
         this._parsed = "";
         this._columns = [];
@@ -8,21 +19,21 @@ class ColumnParser {
     }
 
 
-    addColumn(type, name, options = {}) {
+    addColumn(type: string, name: string, options: parserOps = {}) {
         let psh = name + " " + type;
         if (options.notNull) psh += " NOT NULL"
         this._columns.push(psh)
     }
 
-    int(name, options) {
+    int(name: string, options: parserOps = {}) {
         this.addColumn("int", name, options);
     }
 
-    string(name, options) {
+    string(name: string, options: parserOps = {}) {
         this.addColumn("varchar", name, options);
     }
 
-    timestamp(name, options) {
+    timestamp(name: string, options: parserOps = {}) {
         this.addColumn("timestamp", name, options);
     }
 
@@ -49,8 +60,7 @@ class ColumnParser {
 
 
 
-async function createTable(cxn, name, columnCB) {
-
+async function createTable(cxn: Cxn, name: string, columnCB: (_: ColumnParser) => void) {
     let cp = new ColumnParser();
     columnCB(cp);
     let columns = cp.parse();

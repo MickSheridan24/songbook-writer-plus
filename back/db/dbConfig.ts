@@ -1,5 +1,6 @@
 const initOptions = {};
 const pgp = require("pg-promise")(initOptions);
+import { Cxn } from "../types/dbtypes"
 
 const configuration = {
   host: "localhost",
@@ -10,24 +11,25 @@ const configuration = {
 
 const DB = pgp(configuration);
 
-const client = {
-  connect: async function () {
-    const cxn = await DB.connect();
-    return cxn;
-  },
-  close: async function (cxn) {
-    if (cxn) {
-      cxn.done();
-    }
-  },
-  do: async function (cb) {
-    // console.log("Database Transaction");
+// async function buildClient(): Promise<Cxn> {
+//   const cxn = DB.connect();
+//   const client = {
+//     done: () => cxn.done(),
+//     remains: () => cxn ? true : false,
+//     any<T>: () => 
 
-    let cxn = await DB.connect();
+//   }
+//   return client;
+// }
+
+const client = {
+  do: async function (cb: (_: Cxn) => any) {
+    // console.log("Database Transaction");
+    let cxn: Cxn = await DB.connect;
     let ret = await cb(cxn);
     if (cxn) cxn.done();
     return ret;
   }
 };
 
-module.exports = client;
+export default client;

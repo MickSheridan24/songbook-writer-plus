@@ -1,6 +1,10 @@
+import db from "../dbConfig";
+import stubs from "./stubMaster";
+import { logDBError as log } from "./shared"
+import { StubFac } from "../../types/dbtypes"
 const fs = require("fs");
-const db = require("../dbConfig");
-const stubs = require("./stubMaster")
+
+
 let stub = "async function up(cxn){}\n async function down(cxn){} \n module.exports = { up: up, down: down };";
 const args = process.argv;
 
@@ -16,18 +20,18 @@ if (args[3]) {
 
 createMigration(stub).then(s => process.exit());
 
-async function createMigration(stub) {
+async function createMigration(stub: string) {
   console.log("Creating Migration...")
   const datetime = Date.now();
   const migrationName = name + "-" + datetime
   const path = "./db/migrations/" + migrationName + ".js";
 
-  fs.writeFileSync(path, stub, err => console.error(err))
+  fs.writeFileSync(path, stub, (err: string) => log(err, "createMigration.writeFileSync"))
   await updateMigrationsTable(migrationName).then(s => s);
 
 }
 
-async function updateMigrationsTable(name) {
+async function updateMigrationsTable(name: string) {
   const q = "INSERT INTO migrations (name, migrationDate, status) VALUES ('" + name + "', NULL, false);"
   await db.do(async cxn => {
     await cxn.any(q).catch(e => console.error("ERROR inserting migration", e))
@@ -35,7 +39,7 @@ async function updateMigrationsTable(name) {
   })
 }
 
-function fetchStub(stubName, insert = "TABLE_NAME") {
+function fetchStub(stubName: string, insert = "TABLE_NAME") {
   switch (stubName) {
     case "table": return stubs.createTable(insert);
     default: return null;
