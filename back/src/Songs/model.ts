@@ -1,7 +1,8 @@
 import client from "../dbBench";
 import Chords from "../Chords/model";
+import Base from "../Model/BaseModel";
 
-type Song = {
+type song = {
   id: number;
   title: string;
   userId: number;
@@ -9,21 +10,11 @@ type Song = {
   text: string;
 };
 
-class Songs {
-  static async get(
-    id: number,
-    params: { getChords: boolean } = { getChords: false }
-  ): Promise<Song> {
-    const res = await client
-      .select()
-      .from("songs")
-      .where("id", id);
-    const song = { ...res[0] };
-    if (params.getChords) {
-      song.chords = await Chords.all(id);
-    }
-    return song;
+class Song extends Base<song>{
+  static tableName = "songs"
+  constructor(params: song) {
+    super(params);
   }
 }
 
-export default Songs;
+export default Song;

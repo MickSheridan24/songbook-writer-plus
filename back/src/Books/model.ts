@@ -1,37 +1,19 @@
 import client from "../dbBench";
 
-type Book = {
+
+
+class Book {
   title: string;
   userId: number;
   year: number;
-};
 
-class Books {
-  static async all(): Promise<Book[]> {
-    const books = await client.select().from("books");
-    return books;
+  constructor(params: { title: string, userId: number, year: number, id: number }) {
+    this.title = params.title;
+    this.userId = params.userId;
+    this.year = params.year;
   }
 
-  static async get(id: string): Promise<Book> {
-    const book = await client
-      .select()
-      .from("books")
-      .where("id", id);
-    return book[0];
-  }
-  static async create(params: Book): Promise<Book> {
-    const book = await client("books")
-      .insert(params)
-      .returning("*");
-    return book;
-  }
-  static async delete(id: string): Promise<Book> {
-    const book = await client("books")
-      .where("id", id)
-      .del()
-      .returning("*");
-    return book;
-  }
+
 }
 
-export default Books;
+export default Book;

@@ -9,14 +9,29 @@
       "request": "launch",
       "name": "Create Migration",
       "cwd": "${workspaceRoot}/back",
-      "program": "${workspaceRoot}/back/db/util/createMigration.js",
+      "args": [
+        "${workspaceRoot}/back/db/util/createMigration.ts",
+        "songs",
+        "table"
+      ],
+      "runtimeArgs": [
+        "--nolazy",
+        "-r",
+        "ts-node/register",
+      ],
+      "sourceMaps": true,
+      "protocol": "inspector"
     },
     {
       "type": "node",
       "request": "launch",
+      "runtimeArgs": [
+        "-r",
+        "ts-node/register"
+      ],
       "name": "Migrate",
       "cwd": "${workspaceRoot}/back",
-      "program": "${workspaceRoot}/back/db/util/migrator.js",
+      "program": "${workspaceRoot}/back/db/util/migrator.ts",
     }
   ]
 }

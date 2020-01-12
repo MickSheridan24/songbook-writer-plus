@@ -1,6 +1,7 @@
 import { Cxn } from "../../types/dbtypes";
 
 import { CreateTable } from "./sqlScripts";
+import db from "../dbConfig";
 
 type parserOps = {
     notNull?: boolean;
@@ -70,5 +71,13 @@ async function createTable(cxn: Cxn, name: string, columnCB: (_: ColumnParser) =
 }
 
 
-let cm = { createTable }
-export default cm;
+
+async function getResource(table: string, id: number) {
+    return await db.do(async cxn => {
+        const q = "SELECT * from $1 WHERE id = $2"
+        return await cxn.one(q, [table, id.toString()]);
+    })
+}
+
+
+export { createTable, getResource }

@@ -1,9 +1,9 @@
-import cm from "../util/crudMaster";
+import { createTable } from "../util/crudMaster";
 import { Cxn } from "../../types/dbtypes";
 
 async function up(cxn: Cxn) {
     console.log("running");
-    await cm.createTable(cxn, "books", (b) => {
+    await createTable(cxn, "books", (b) => {
         b.string("title", { notNull: true })
         b.int("year");
         b.int("userId", { notNull: true })

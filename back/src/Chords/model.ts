@@ -1,27 +1,28 @@
 import client from "../dbBench";
 
-type Chord = {
+class Chords {
   note: string;
   aspect: string;
-  note_num: number;
+  noteNum: number;
   line: number;
   offset: number;
-};
 
-class Chords {
-  static async all(songId: number): Promise<Chord> {
-    const chords = await client
-      .select()
-      .from("chords")
-      .where("song_id", songId);
-    return chords;
+  constructor(params: {
+    note: string,
+    aspect: string,
+    noteNum: number,
+    line: number,
+    offset: number
+  }) {
+    this.note = params.note
+    this.aspect = params.aspect
+    this.noteNum = params.noteNum
+    this.line = params.line
+    this.offset = params.offset
+
   }
-  static async create(params: Chord): Promise<Chord> {
-    const chord = await client("chords")
-      .insert(params)
-      .returning("*");
-    return chord[0];
-  }
+
+
 }
 
 export default Chords;

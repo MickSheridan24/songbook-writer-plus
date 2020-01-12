@@ -1,37 +1,23 @@
 import { MigrationLog } from "./dbtypes";
+import Book from "../src/Books/model";
+import User from "../src/Users/model"
+import Chord from "../src/Chords/model";
+import Song from "../src/Songs/model";
+import BaseModel from "../src/Model/BaseModel"
 
-type Book = {
-    title: string,
-    userId: number,
-    id: number,
-    year: number
-}
-type Chord = {
-    note: string;
-    aspect: string;
-    note_num: number;
-    line: number;
-    offset: number;
-};
-type Song = {
-    id: number;
-    title: string;
-    userId: number;
-    artist: string;
-    text: string;
-};
-type User = {
-    id: number;
-    username: string;
-    passwordDigest: string;
-};
+
 
 type Resource = User | Song | Book | Chord | MigrationLog;
+
+
+
+
 
 export {
     Book,
     Chord,
     Song,
     User,
-    Resource
+    Resource,
+
 }
