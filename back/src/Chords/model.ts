@@ -1,28 +1,20 @@
 import client from "../dbBench";
+import Base from "../Model/BaseModel"
 
-class Chords {
+type _chord = {
   note: string;
   aspect: string;
   noteNum: number;
   line: number;
   offset: number;
+}
 
-  constructor(params: {
-    note: string,
-    aspect: string,
-    noteNum: number,
-    line: number,
-    offset: number
-  }) {
-    this.note = params.note
-    this.aspect = params.aspect
-    this.noteNum = params.noteNum
-    this.line = params.line
-    this.offset = params.offset
 
+class Chords extends Base<_chord>{
+  static tableName = "chords"
+  constructor(params: _chord) {
+    super(params)
   }
-
-
 }
 
 export default Chords;

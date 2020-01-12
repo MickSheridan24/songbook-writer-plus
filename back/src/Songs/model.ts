@@ -2,7 +2,7 @@ import client from "../dbBench";
 import Chords from "../Chords/model";
 import Base from "../Model/BaseModel";
 
-type song = {
+interface _song {
   id: number;
   title: string;
   userId: number;
@@ -10,9 +10,9 @@ type song = {
   text: string;
 };
 
-class Song extends Base<song>{
+class Song extends Base<_song>{
   static tableName = "songs"
-  constructor(params: song) {
+  constructor(params: _song) {
     super(params);
   }
 }

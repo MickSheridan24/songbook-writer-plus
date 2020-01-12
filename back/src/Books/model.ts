@@ -1,19 +1,17 @@
 import client from "../dbBench";
+import Base from "../Model/BaseModel"
 
-
-
-class Book {
+type _book = {
   title: string;
   userId: number;
   year: number;
+}
 
-  constructor(params: { title: string, userId: number, year: number, id: number }) {
-    this.title = params.title;
-    this.userId = params.userId;
-    this.year = params.year;
+class Book extends Base<_book>{
+  static tableName = "books"
+  constructor(params: _book) {
+    super(params)
   }
-
-
 }
 
 export default Book;

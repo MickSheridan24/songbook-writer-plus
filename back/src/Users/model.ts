@@ -1,15 +1,16 @@
 import client from "../dbBench";
+import Base from "../Model/BaseModel"
 
-class User {
+
+type _user = {
   id: number;
   username: string;
   passwordDigest: string;
-
-
-  constructor(params: { id: number, username: string, passwordDigest: string }) {
-    this.id = params.id;
-    this.username = params.username;
-    this.passwordDigest = params.passwordDigest
+}
+class Usere extends Base<_user> {
+  static tableName = "users"
+  constructor(params: _user) {
+    super(params)
   }
 };
 

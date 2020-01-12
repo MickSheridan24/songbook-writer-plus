@@ -3,9 +3,7 @@ import { Cxn } from "../../types/dbtypes";
 import { CreateTable } from "./sqlScripts";
 import db from "../dbConfig";
 
-type parserOps = {
-    notNull?: boolean;
-}
+import { columnOps as parserOps } from "../schema"
 
 class ColumnParser {
     _parsed: string;
@@ -80,4 +78,4 @@ async function getResource(table: string, id: number) {
 }
 
 
-export { createTable, getResource }
+export { ColumnParser, createTable, getResource, parserOps }

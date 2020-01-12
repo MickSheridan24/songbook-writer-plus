@@ -2,7 +2,7 @@ import db from "../dbConfig";
 import stubs from "./stubMaster";
 import { logDBError as log } from "./shared"
 import { Cxn } from "../../types/dbtypes"
-import TableMap from "../../src/Model/TableMap"
+import { schema, validType, column } from "../schema"
 const fs = require("fs");
 
 
@@ -48,16 +48,28 @@ async function fetchStub(stubName: string, insert = "invalid"): Promise<string> 
 
 async function checkTableTypes(tableName: string) {
   debugger
-  const found = TableMap.find(t => {
-
-    return t.name === tableName;
-  })
+  const found = schema.find(t => t.name === tableName)
   if (found) {
-    const model = found.model
-    return buildTableFields(model.fields);
+    return buildTableFields(found.columns);
   }
   return ""
 }
+
+
+function buildTableFields(fields: column[]) {
+  let ret = ""
+  // {name: "title", type: "string", options{notNull: true}}
+  //  b.string("title", { notNull: true })
+  fields.forEach(f => {
+    ret += `b.${f.type}("${f.name}"`
+    if (f.options) {
+      ret += "," + JSON.stringify(f.options)
+    }
+    ret += ");\n"
+  })
+  return ret;
+}
+
 
 fetchStub(migrationType, itemName)
   .then((stub) => createMigration(stub))

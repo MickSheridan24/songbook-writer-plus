@@ -2,7 +2,9 @@ import Song from "../Songs/model";
 import { Chord } from "../../types/modelTypes";
 
 
-const prototypes = {
+const prototyper = ()
+
+export default {
     Song: new Song({
         id: 0,
         title: "",
@@ -12,8 +14,8 @@ const prototypes = {
     }),
 
     Chord: new Chord({
+        id: 0,
 
     })
 }
 
-export default prototypes

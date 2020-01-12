@@ -1,12 +1,13 @@
 const stubs = {
     createTable: (name: string, fields: string = "") => {
-        return `import cm from "../util/crudMaster";
+        return `import {createTable, ColumnParser as cp} from "../util/crudMaster";
         import { Cxn } from "../../types/dbtypes";
         
         async function up(cxn: Cxn) {
-            await cm.createTable(cxn, "${name}", (b) => {
-                b.id();
+            await createTable(cxn, "${name}", (b: cp) => {
                 ${fields}
+                b.id();
+         
             })
         }
         async function down(cxn: Cxn) {
