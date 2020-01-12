@@ -1,17 +1,13 @@
 import { MigrationLog } from "./dbtypes";
-import Book from "../src/Books/model";
-import User from "../src/Users/model"
-import Chord from "../src/Chords/model";
-import Song from "../src/Songs/model";
-import BaseModel from "../src/Model/BaseModel"
+import Book from "../Models/Book";
+import User from "../Models/User"
+import Chord from "../Models/Chord";
+import Song from "../Models/Songs";
+import BaseModel from "../Models/BaseModel"
 
 
 
 type Resource = User | Song | Book | Chord | MigrationLog;
-
-
-
-
 
 export {
     Book,

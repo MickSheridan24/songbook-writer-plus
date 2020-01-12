@@ -7,6 +7,7 @@ class BaseResource<T> {
     constructor(params: T) {
         this.fields = params;
     }
+
     static async get(id: number) {
         return await getResource(this.tableName, id)
     }

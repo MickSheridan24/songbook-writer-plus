@@ -7,7 +7,7 @@ type _user = {
   username: string;
   passwordDigest: string;
 }
-class Usere extends Base<_user> {
+class User extends Base<_user> {
   static tableName = "users"
   constructor(params: _user) {
     super(params)
