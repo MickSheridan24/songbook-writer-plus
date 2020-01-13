@@ -8,9 +8,12 @@ class BaseResource<T> {
         this.fields = params;
     }
 
-    static async get(id: number) {
+    static async get(id: string) {
+        console.log("GET", id)
         return await getResource(this.tableName, id)
     }
+
+
 }
 
 

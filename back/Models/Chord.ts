@@ -1,5 +1,4 @@
-import client from "../dbBench";
-import Base from "../Model/BaseModel"
+import Base from "./BaseModel"
 
 type _chord = {
   note: string;

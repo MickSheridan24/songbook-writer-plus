@@ -1,6 +1,5 @@
-import client from "../dbBench";
-import Chords from "../Chords/model";
-import Base from "../Model/BaseModel";
+
+import Base from "./BaseModel";
 
 interface _song {
   id: number;
@@ -16,5 +15,8 @@ class Song extends Base<_song>{
     super(params);
   }
 }
+
+
+
 
 export default Song;

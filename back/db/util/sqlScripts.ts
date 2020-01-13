@@ -1,5 +1,5 @@
 const QueryFile = require('pg-promise').QueryFile
-const path = "../sql/";
+const path = process.cwd() + "/db/sql/";
 
 const config = { minify: true };
 
@@ -11,6 +11,6 @@ export const MigrateAllUnmigrated = addScript("MigrateAllUnmigrated");
 export const IdentifyMigrationsToBeRollbacked = addScript("IdentifyMigrationsToBeRollbacked");
 export const RollbackMostRecent = addScript("RollbackMostRecent");
 export const CreateTable = addScript("CreateTable")
-
+export const GetResource = addScript("GetResource")
 
 

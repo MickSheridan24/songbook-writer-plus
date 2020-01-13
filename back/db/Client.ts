@@ -1,6 +1,6 @@
 import { Cxn } from "../types/dbtypes";
 
-import { CreateTable } from "./util/sqlScripts";
+import { CreateTable, GetResource } from "./util/sqlScripts";
 import db from "./DB";
 
 import { columnOps as parserOps } from "./schema"
@@ -64,16 +64,15 @@ async function createTable(cxn: Cxn, name: string, columnCB: (_: ColumnParser) =
     let cp = new ColumnParser();
     columnCB(cp);
     let columns = cp.parse();
-    console.log(columns)
     await cxn.any(CreateTable, [name, columns]).catch(e => console.error("DBERROR in CrudMaster createTable", e))
 }
 
 
 
-async function getResource(table: string, id: number) {
+async function getResource(table: string, id: string) {
     return await db.do(async cxn => {
-        const q = "SELECT * from $1 WHERE id = $2"
-        return await cxn.one(q, [table, id.toString()]);
+        console.log("GET RESOURCE")
+        return await cxn.one(GetResource, ["*", table, `id=${id}`]).catch(e => console.error("DBERROR in CrudMasterGetResource", e))
     })
 }
 
