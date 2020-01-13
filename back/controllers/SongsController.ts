@@ -1,14 +1,13 @@
 import express from "express";
-import Songs from "./model";
+import Songs from "../Models/Songs";
 const router = express.Router();
 
-router.get("/:id", (req, res) => {
-  Songs.get(parseInt(req.params.id), { getChords: true }).then(r =>
-    res.send(r)
-  );
-});
-router.use("/", (req, res, next) => {
-  next();
-});
-
-module.exports = router;
+// router.get("/:id", (req, res) => {
+//   Songs.get(parseInt(req.params.id)).then(r =>
+//     res.send(r)
+//   );
+// });
+// router.use("/", (req, res, next) => {
+//   next();
+// });
+export default router;

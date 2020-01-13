@@ -25,8 +25,19 @@ const schema = [
         columns: <column[]>[
             column("note", "string", { notNull: true }),
             column("aspect", "string"),
+
+        ]
+
+
+    },
+    {
+        name: "chords_songs",
+        columns: <column[]>[
+            column("chordId", "int", { notNull: true }),
+            column("songId", "int", { notNull: true }),
             column('line', 'int', { notNull: true }),
             column('character', 'int', { notNull: true }),
+
         ]
     },
     {

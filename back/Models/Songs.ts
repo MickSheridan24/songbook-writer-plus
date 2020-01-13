@@ -1,6 +1,6 @@
-import client from "../dbBench";
-import Chords from "../Chords/model";
-import Base from "../Model/BaseModel";
+
+import Base from "./BaseModel";
+import { Get } from "./interfaces/accessors"
 
 interface _song {
   id: number;
@@ -15,6 +15,13 @@ class Song extends Base<_song>{
   constructor(params: _song) {
     super(params);
   }
+
+  static async get(id: string) {
+    return Get(this.tableName, id)
+  }
 }
+
+
+
 
 export default Song;

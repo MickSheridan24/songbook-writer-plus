@@ -1,3 +1,13 @@
-exports.songs = require("./Songs/controller");
-exports.chords = require("./Chords/controller");
-exports.books = require("./Books/controller");
+
+
+import songs from "./controllers/SongsController"
+import chords from "./controllers/ChordsController"
+import books from "./controllers/BooksController"
+
+console.log("ROUTER")
+const router = {
+    songs, books, chords
+}
+
+
+export default router

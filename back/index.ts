@@ -1,11 +1,10 @@
-const express = require("express");
-const routers = require("./router");
-const restController = require("./RestController");
+import express from "express";
+import routers from "./router";
 
 const app = express();
 
 app.use(express.json());
-app.use("/", function(req: any, res: any, next: any) {
+app.use("/", function (req: any, res: any, next: any) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
@@ -15,10 +14,10 @@ app.use("/", function(req: any, res: any, next: any) {
   next();
 });
 
-app.use("/songs", routers.songs, restController("songs"));
-app.use("/chords", restController("chords"));
-app.use("/books", restController("books"));
+app.use("/songs", routers.songs);
+app.use("/chords", routers.chords);
+app.use("/books", routers.books);
 
 module.exports = app;
 
-app.listen(3002, () => console.log(`Up and Running on port 3002`));
+app.listen(4001, () => console.log(`Up and Running on port 4001`));

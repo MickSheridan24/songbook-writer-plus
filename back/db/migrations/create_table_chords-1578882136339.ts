@@ -5,8 +5,6 @@ import {createTable, ColumnParser as cp} from "../Client";
             await createTable(cxn, "chords", (b: cp) => {
                 b.string("note",{"notNull":true});
 b.string("aspect");
-b.int("line",{"notNull":true});
-b.int("character",{"notNull":true});
 
                 b.id();
          
