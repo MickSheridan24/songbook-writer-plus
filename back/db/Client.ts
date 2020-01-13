@@ -1,6 +1,6 @@
 import { Cxn } from "../types/dbtypes";
 
-import { CreateTable, GetResource } from "./util/sqlScripts";
+import { CreateTable, GetResource, Seed } from "./util/sqlScripts";
 import db from "./DB";
 
 import { columnOps as parserOps } from "./schema"
@@ -58,23 +58,47 @@ class ColumnParser {
 }
 
 
+function log(name: string, e: string) {
+    console.error(`DATABASE ERROR in Client.ts -- ${name}: ${e}`)
+}
+
+
+async function seed() {
+    await db.do(async cxn => {
+        console.log("SEEDING")
+        await cxn.none(Seed).catch(e => log("getResource", e))
+    })
+}
+
 
 async function createTable(cxn: Cxn, name: string, columnCB: (_: ColumnParser) => void) {
 
     let cp = new ColumnParser();
     columnCB(cp);
     let columns = cp.parse();
-    await cxn.any(CreateTable, [name, columns]).catch(e => console.error("DBERROR in CrudMaster createTable", e))
+    await cxn.any(CreateTable, [name, columns]).catch(e => log("createTable", e))
 }
-
-
 
 async function getResource(table: string, id: string) {
     return await db.do(async cxn => {
         console.log("GET RESOURCE")
-        return await cxn.one(GetResource, ["*", table, `id=${id}`]).catch(e => console.error("DBERROR in CrudMasterGetResource", e))
+        return await cxn.one(GetResource, ["*", table, `id=${id}`]).catch(e => log("getResource", e))
     })
 }
 
+async function getAll(table: string) {
+    return await db.do(async cxn => {
+        console.log("GET RESOURCE " + table)
+        const q = "SELECT * FROM $1:raw;"
+        return await cxn.any(q, table).catch(e => log("getAll", e))
+    })
+}
 
-export { ColumnParser, createTable, getResource, parserOps }
+async function getWhere(table: string, query: string) {
+    return await db.do(async cxn => {
+        console.log("GET WHERE " + query)
+        return await cxn.one(GetResource, ["*", table, query]).catch(e => log("getWhere", e))
+    })
+}
+
+export { ColumnParser, createTable, getResource, parserOps, seed }

@@ -8,6 +8,7 @@
     "mignew": "ts-node db/util/createMigration",
     "migkill": "ts-node db/util/killMigration",
     "migrate": "ts-node db/util/migrator",
+    "migseed": "ts-node db/util/seeder",
     "rollback": "ts-node db/util/rollbacker"
   },
   "author": "",

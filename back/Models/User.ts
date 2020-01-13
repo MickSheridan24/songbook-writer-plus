@@ -1,5 +1,5 @@
 import Base from "./BaseModel"
-
+import { Get } from "./interfaces/accessors"
 
 type _user = {
   id: number;
@@ -10,6 +10,10 @@ class User extends Base<_user> {
   static tableName = "users"
   constructor(params: _user) {
     super(params)
+  }
+
+  static async get(id: string) {
+    return Get(this.tableName, id)
   }
 };
 

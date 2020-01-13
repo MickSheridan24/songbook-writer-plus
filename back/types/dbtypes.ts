@@ -3,6 +3,7 @@ import { Resource } from "./modelTypes"
 type Cxn = {
     done(): void,
     any(_: string, __?: string | string[]): Promise<Resource[]>,
+    none(_: string, __?: string | string[]): Promise<any>,
     any<Resource>(_: string, __?: string | string[]): Promise<Resource[]>,
     one<Resource>(_: string, __?: string | string[]): Promise<Resource>
 }
