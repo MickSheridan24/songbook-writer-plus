@@ -1,4 +1,4 @@
-import db from "../dbConfig";
+import db from "../DB";
 import fs from "fs";
 import { MigrateAllUnmigrated } from "./sqlScripts";
 import { MigrationLog, Migration } from "../../types/dbtypes";

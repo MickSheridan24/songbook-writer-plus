@@ -1,6 +1,6 @@
 import { Cxn, Migration, MigrationLog } from "../../types/dbtypes";
 
-import db from "../dbConfig";
+import db from "../DB";
 import { performRollback as rollback } from "./shared"
 import fs from "fs";
 

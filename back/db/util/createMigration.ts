@@ -1,4 +1,4 @@
-import db from "../dbConfig";
+import db from "../DB";
 import stubs from "./stubMaster";
 import { logDBError as log } from "./shared"
 import { Cxn } from "../../types/dbtypes"

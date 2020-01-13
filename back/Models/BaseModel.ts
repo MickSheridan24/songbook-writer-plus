@@ -1,4 +1,4 @@
-import { getResource } from "../../db/util/crudMaster"
+import { getResource } from "../db/Client"
 
 
 class BaseResource<T> {

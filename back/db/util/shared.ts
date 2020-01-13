@@ -1,4 +1,4 @@
-import db from "../dbConfig";
+import db from "../DB";
 import { MigrationLog, Migration } from "../../types/dbtypes"
 const path = process.cwd() + "/db/migrations/"
 

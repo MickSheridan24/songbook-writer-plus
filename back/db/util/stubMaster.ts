@@ -1,6 +1,6 @@
 const stubs = {
     createTable: (name: string, fields: string = "") => {
-        return `import {createTable, ColumnParser as cp} from "../util/crudMaster";
+        return `import {createTable, ColumnParser as cp} from "../Client";
         import { Cxn } from "../../types/dbtypes";
         
         async function up(cxn: Cxn) {

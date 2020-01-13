@@ -1,4 +1,4 @@
-import db from "../dbConfig";
+import db from "../DB";
 import { RollbackMostRecent, IdentifyMigrationsToBeRollbacked } from "./sqlScripts";
 import { Cxn, MigrationLog } from "../../types/dbtypes"
 import { logDBError as log } from "./shared"

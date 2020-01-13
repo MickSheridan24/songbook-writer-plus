@@ -1,9 +1,9 @@
-import { Cxn } from "../../types/dbtypes";
+import { Cxn } from "../types/dbtypes";
 
-import { CreateTable } from "./sqlScripts";
-import db from "../dbConfig";
+import { CreateTable } from "./util/sqlScripts";
+import db from "./DB";
 
-import { columnOps as parserOps } from "../schema"
+import { columnOps as parserOps } from "./schema"
 
 class ColumnParser {
     _parsed: string;
