@@ -7,6 +7,24 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "Launch Server",
+      "cwd": "${workspaceRoot}/back",
+      "args": [
+        "${workspaceRoot}/back/index.ts",
+        "songs",
+        "table"
+      ],
+      "runtimeArgs": [
+        "--nolazy",
+        "-r",
+        "ts-node/register",
+      ],
+      "sourceMaps": true,
+      "protocol": "inspector"
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "Create Migration",
       "cwd": "${workspaceRoot}/back",
       "args": [

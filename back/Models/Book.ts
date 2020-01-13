@@ -1,5 +1,5 @@
 import Base from "./BaseModel"
-import { Get } from "./interfaces/accessors"
+import { Get, All, Where } from "./interfaces/accessors"
 
 type _book = {
   title: string;
@@ -15,6 +15,12 @@ class Book extends Base<_book>{
 
   static async get(id: string) {
     return Get(this.tableName, id)
+  }
+  static async all() {
+    return All(this.tableName)
+  }
+  static async where(query: { [key: string]: string }) {
+    return Where(this.tableName, query);
   }
 
 }

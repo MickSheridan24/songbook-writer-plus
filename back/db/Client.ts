@@ -101,4 +101,4 @@ async function getWhere(table: string, query: string) {
     })
 }
 
-export { ColumnParser, createTable, getResource, parserOps, seed }
+export { ColumnParser, createTable, getAll, getWhere, getResource, parserOps, seed }

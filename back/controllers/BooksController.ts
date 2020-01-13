@@ -3,16 +3,22 @@ import Books from "../Models/Book";
 
 const router = express.Router();
 
-// router.get("/", async (req, res) => {
-//   const books = await Books.all();
-//   res.send(books);
-// });
+router.get("/", async (req, res) => {
+  const books = await Books.all();
+  res.send(books);
+});
+router.get("/search", async (req, res) => {
 
+  debugger;
+  const books = await Books.where(req.query);
+  res.send(books)
+})
 router.get("/:id", async (req, res) => {
-  console.log("Controller")
   const book = await Books.get(req.params.id);
   res.send(book);
 });
+
+
 
 // router.post("/", async (req, res) => {
 //   Books.create(req.body).then(r => res.send(r));
