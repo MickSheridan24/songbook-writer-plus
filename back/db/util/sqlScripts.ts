@@ -13,5 +13,6 @@ export const RollbackMostRecent = addScript("RollbackMostRecent");
 export const CreateTable = addScript("CreateTable")
 export const GetResource = addScript("GetResource")
 export const Seed = addScript("Seed")
+export const CreateResource = addScript("CreateResource");
 
 

@@ -1,9 +1,74 @@
 import { Cxn } from "../types/dbtypes";
 
-import { CreateTable, GetResource, Seed } from "./util/sqlScripts";
+import { CreateTable, GetResource, Seed, CreateResource as _createResource } from "./util/sqlScripts";
 import db from "./DB";
 
 import { columnOps as parserOps } from "./schema"
+
+
+
+
+async function seed() {
+    await db.do(async cxn => {
+        console.log("SEEDING")
+        await cxn.none(Seed).catch(e => log("getResource", e))
+    })
+}
+
+
+async function createTable(cxn: Cxn, name: string, columnCB: (_: ColumnParser) => void) {
+
+    let cp = new ColumnParser();
+    columnCB(cp);
+    let columns = cp.parse();
+    await cxn.any(CreateTable, [name, columns]).catch(e => log("createTable", e))
+}
+
+async function getResource(table: string, id: string) {
+    return await db.do(async cxn => {
+        console.log("GET RESOURCE")
+        return await cxn.one(GetResource, ["*", table, `id=${id}`]).catch(e => log("getResource", e))
+    })
+}
+
+async function getAll(table: string) {
+    return await db.do(async cxn => {
+        console.log("GET RESOURCE " + table)
+        const q = "SELECT * FROM $1:raw;"
+        return await cxn.any(q, table).catch(e => log("getAll", e))
+    })
+}
+
+async function getWhere(table: string, query: string) {
+    return await db.do(async cxn => {
+        console.log("GET WHERE " + query)
+        return await cxn.one(GetResource, ["*", table, query]).catch(e => log("getWhere", e))
+    })
+}
+
+async function CreateResource(table: string, params: { [key: string]: string }) {
+    return await db.do(async cxn => {
+        console.log("INSERT INTO ", table);
+        const parsed = parseObject(params);
+        return await cxn.any(_createResource, [table, parsed.columns, parsed.values])
+    })
+}
+
+
+function parseObject(params: { [key: string]: string }) {
+    const ret: { columns: string, values: string } = { columns: "", values: "" };
+    const keys = Object.keys(params)
+    for (let x = 0; x < keys.length; x++) {
+        if (x != 0) {
+            ret.columns += ", ";
+            ret.values += ", ";
+        }
+        ret.columns += keys[x];
+        ret.values += params[keys[x]]
+
+    }
+    return ret;
+}
 
 class ColumnParser {
     _parsed: string;
@@ -63,42 +128,6 @@ function log(name: string, e: string) {
 }
 
 
-async function seed() {
-    await db.do(async cxn => {
-        console.log("SEEDING")
-        await cxn.none(Seed).catch(e => log("getResource", e))
-    })
-}
 
 
-async function createTable(cxn: Cxn, name: string, columnCB: (_: ColumnParser) => void) {
-
-    let cp = new ColumnParser();
-    columnCB(cp);
-    let columns = cp.parse();
-    await cxn.any(CreateTable, [name, columns]).catch(e => log("createTable", e))
-}
-
-async function getResource(table: string, id: string) {
-    return await db.do(async cxn => {
-        console.log("GET RESOURCE")
-        return await cxn.one(GetResource, ["*", table, `id=${id}`]).catch(e => log("getResource", e))
-    })
-}
-
-async function getAll(table: string) {
-    return await db.do(async cxn => {
-        console.log("GET RESOURCE " + table)
-        const q = "SELECT * FROM $1:raw;"
-        return await cxn.any(q, table).catch(e => log("getAll", e))
-    })
-}
-
-async function getWhere(table: string, query: string) {
-    return await db.do(async cxn => {
-        console.log("GET WHERE " + query)
-        return await cxn.one(GetResource, ["*", table, query]).catch(e => log("getWhere", e))
-    })
-}
-
-export { ColumnParser, createTable, getAll, getWhere, getResource, parserOps, seed }
+export { ColumnParser, createTable, getAll, getWhere, getResource, parserOps, seed, CreateResource }

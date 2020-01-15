@@ -1,5 +1,7 @@
-const Create = <T>(table: string, params: T) => {
+import { CreateResource } from "../../db/Client"
 
+const Create = async<T>(table: string, params: T) => {
+    return await CreateResource(table, params);
 }
 
 const Update = <T>(table: string, id: number, params: T) => {
