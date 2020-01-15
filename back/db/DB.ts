@@ -11,17 +11,6 @@ const configuration = {
 
 const DB = pgp(configuration);
 
-// async function buildClient(): Promise<Cxn> {
-//   const cxn = DB.connect();
-//   const client = {
-//     done: () => cxn.done(),
-//     remains: () => cxn ? true : false,
-//     any<T>: () => 
-
-//   }
-//   return client;
-// }
-
 const client = {
   do: async function (cb: (_: Cxn) => any) {
     console.log("Database Transaction");

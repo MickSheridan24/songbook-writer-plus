@@ -25,9 +25,7 @@ const schema = [
         columns: <column[]>[
             column("note", "string", { notNull: true }),
             column("aspect", "string"),
-
         ]
-
 
     },
     {

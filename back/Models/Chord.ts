@@ -6,7 +6,7 @@ type _chord = {
   aspect: string;
   noteNum: number;
   line: number;
-  offset: number;
+  character: number;
 }
 
 

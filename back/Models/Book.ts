@@ -1,5 +1,6 @@
 import Base from "./BaseModel"
 import { Get, All, Where } from "./interfaces/accessors"
+import { Create, Update, Destroy } from "./interfaces/mutators"
 
 type _book = {
   title: string;
@@ -21,6 +22,16 @@ class Book extends Base<_book>{
   }
   static async where(query: { [key: string]: string }) {
     return Where(this.tableName, query);
+  }
+
+  static async create(params: _book) {
+    return Create<_book>(this.tableName, params)
+  }
+  static async update(id: number, params: _book) {
+    return Update<_book>(this.tableName, id, params)
+  }
+  static async destroy(id: number) {
+    return Update<_book>(this.tableName, id)
   }
 
 }
