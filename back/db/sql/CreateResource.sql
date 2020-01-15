@@ -1,1 +1,1 @@
-INSERT INTO $1:raw ($2:raw) VALUES ($3:raw);
+INSERT INTO $1:raw ($2:raw) VALUES ($3:raw) RETURNING *;

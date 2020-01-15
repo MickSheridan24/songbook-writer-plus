@@ -18,11 +18,12 @@ router.get("/:id", async (req, res) => {
   res.send(book);
 });
 
-
-
-// router.post("/", async (req, res) => {
-//   Books.create(req.body).then(r => res.send(r));
-// });
+router.post("/", async (req, res) => {
+  console.log("CONTROLLER")
+  debugger
+  const book = await Books.create(req.body)
+  res.send(book)
+});
 
 // router.delete("/:id", async (req, res) => {
 //   const book = await Books.delete(req.params.id);

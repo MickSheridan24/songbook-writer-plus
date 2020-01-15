@@ -13,7 +13,7 @@ app.use("/", function (req: any, res: any, next: any) {
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE");
   next();
 });
-
+console.log("INDEX")
 app.use("/songs", routers.songs);
 app.use("/chords", routers.chords);
 app.use("/books", routers.books);

@@ -47,6 +47,7 @@ async function getWhere(table: string, query: string) {
 }
 
 async function CreateResource(table: string, params: { [key: string]: string }) {
+    console.log("DBLAYER")
     return await db.do(async cxn => {
         console.log("INSERT INTO ", table);
         const parsed = parseObject(params);

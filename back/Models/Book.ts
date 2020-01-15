@@ -1,6 +1,6 @@
 import Base from "./BaseModel"
 import { Get, All, Where } from "./interfaces/accessors"
-import { Create, Update, Destroy } from "./interfaces/mutators"
+import { Create, Update, Delete } from "./interfaces/mutators"
 
 type _book = {
   title: string;
@@ -8,30 +8,37 @@ type _book = {
   year: number;
 }
 
-class Book extends Base<_book>{
+function isBook(params: unknown): params is _book {
+  return !!(params as _book)
+}
+
+class Book extends Base<_book> {
   static tableName = "books"
   constructor(params: _book) {
     super(params)
   }
 
   static async get(id: string) {
-    return Get(this.tableName, id)
+    return await Get(this.tableName, id)
   }
   static async all() {
-    return All(this.tableName)
+    return await All(this.tableName)
   }
   static async where(query: { [key: string]: string }) {
-    return Where(this.tableName, query);
+    return await Where(this.tableName, query);
   }
 
-  static async create(params: _book) {
-    return Create<_book>(this.tableName, params)
+  static async create(params: unknown) {
+    console.log("MODEL", params)
+    if (isBook(params)) {
+      return await Create<_book>(this.tableName, params)
+    }
   }
   static async update(id: number, params: _book) {
-    return Update<_book>(this.tableName, id, params)
+    return await Update<_book>(this.tableName, id, params)
   }
-  static async destroy(id: number) {
-    return Update<_book>(this.tableName, id)
+  static async delete(id: number) {
+    return await Delete<_book>(this.tableName, id)
   }
 
 }
