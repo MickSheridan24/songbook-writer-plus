@@ -1,4 +1,8 @@
 
+type tSchema = {
+    name: string,
+    columns: column[]
+}
 type columnOps = {
     notNull?: boolean;
 }
@@ -10,7 +14,7 @@ const column = (name: string, type: validType, options?: columnOps): column => {
 
 
 
-const schema = [
+const schema: tSchema[] = [
     {
         name: "songs",
         columns: <column[]>[
@@ -55,4 +59,4 @@ const schema = [
     },
 ]
 
-export { validType, schema, column, columnOps }
+export { validType, schema, column, columnOps, tSchema }

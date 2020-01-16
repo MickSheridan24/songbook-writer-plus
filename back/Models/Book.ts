@@ -3,14 +3,18 @@ import { Get, All, Where } from "./interfaces/accessors"
 import { Create, Update, Delete } from "./interfaces/mutators"
 
 type _book = {
-  title: string;
-  userId: number;
-  year: number;
+  title: string,
+  userId: number,
+  year: number
 }
 
-function isBook(params: unknown): params is _book {
-  return !!(params as _book)
+type _controllerBook = {
+  title: string,
+  userID: string,
+  year: string
+
 }
+
 
 class Book extends Base<_book> {
   static tableName = "books"
@@ -28,11 +32,11 @@ class Book extends Base<_book> {
     return await Where(this.tableName, query);
   }
 
-  static async create(params: unknown) {
+  static async create(params: _book) {
     console.log("MODEL", params)
-    if (isBook(params)) {
-      return await Create<_book>(this.tableName, params)
-    }
+    debugger
+    return await Create<_book>(this.tableName, params)
+
   }
   static async update(id: number, params: _book) {
     return await Update<_book>(this.tableName, id, params)

@@ -5,7 +5,7 @@ import Chord from "../Models/Chord";
 import Song from "../Models/Songs";
 import BaseModel from "../Models/BaseModel"
 
-
+type indexable = { [_: string]: number | string | boolean }
 
 type Resource = User | Song | Book | Chord | MigrationLog;
 

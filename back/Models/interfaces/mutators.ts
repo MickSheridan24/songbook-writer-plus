@@ -1,11 +1,19 @@
 import { CreateResource } from "../../db/Client"
 
-type DBReady = { [key: string]: string }
+type DBReady = { [key: string]: string | boolean | number }
 
 function paramsAreDBReady(params: unknown): params is DBReady {
-    console.log(!!(params as DBReady).type, params)
-    return !!(params as DBReady).type;
+    let ready = true
+    let dbr = <DBReady>params
+    if (typeof dbr === "object") {
+        for (const key in dbr) {
+            if (typeof key !== "string") ready = false;
+            if (!(typeof dbr[key] === "string" || typeof dbr[key] === "boolean" || typeof dbr[key] === "number")) ready = false;
+        }
+    } else ready = false;
+    return ready;
 }
+
 
 const Create = async<T>(table: string, params: T) => {
     console.log("INTERFACE")

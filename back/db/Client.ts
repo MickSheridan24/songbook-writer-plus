@@ -46,26 +46,29 @@ async function getWhere(table: string, query: string) {
     })
 }
 
-async function CreateResource(table: string, params: { [key: string]: string }) {
+async function CreateResource(table: string, params: { [key: string]: string | boolean | number }) {
     console.log("DBLAYER")
     return await db.do(async cxn => {
         console.log("INSERT INTO ", table);
         const parsed = parseObject(params);
-        return await cxn.any(_createResource, [table, parsed.columns, parsed.values])
+        debugger
+        return await cxn.any(_createResource, [table, parsed.columns, parsed.values]).catch(e => log("Create Resource", e))
     })
 }
 
 
-function parseObject(params: { [key: string]: string }) {
+function parseObject(params: { [key: string]: string | boolean | number }) {
     const ret: { columns: string, values: string } = { columns: "", values: "" };
     const keys = Object.keys(params)
     for (let x = 0; x < keys.length; x++) {
         if (x != 0) {
             ret.columns += ", ";
-            ret.values += ", ";
+            ret.values += ", "
         }
         ret.columns += keys[x];
+        if (typeof params[keys[x]] === "string") ret.values += "'";
         ret.values += params[keys[x]]
+        if (typeof params[keys[x]] === "string") ret.values += "'";
 
     }
     return ret;
