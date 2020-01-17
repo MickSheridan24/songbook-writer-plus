@@ -3,24 +3,25 @@ import { Get, All, Where } from "../interfaces/accessors"
 import { Create, Update, Delete } from "../interfaces/mutators"
 
 class BookContext {
+    private static _t: string = "books"
     static async get(id: string) {
-        return await Get("books", id)
+        return await Get(this._t, id)
     }
     static async all() {
-        return await All(Book.tableName)
+        return await All(this._t)
     }
     static async where(query: { [key: string]: string }) {
-        return await Where(Book.tableName, query);
+        return await Where(this._t, query);
     }
     static async create(params: Book) {
-        return await Create(Book.tableName, params.getFields())
+        return await Create(this._t, params.getFields())
 
     }
     static async update(id: number, params: Book) {
-        return await Update<Book>(Book.tableName, id, params)
+        return await Update<Book>(this._t, id, params)
     }
     static async delete(id: number) {
-        return await Delete<Book>(Book.tableName, id)
+        return await Delete<Book>(this._t, id)
     }
 }
 
