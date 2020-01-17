@@ -1,22 +1,11 @@
 import Book from "../Book"
+import DBContext from "./DBContext"
 import { Get, All, Where } from "../interfaces/accessors"
 import { Create, Update, Delete } from "../interfaces/mutators"
 
-class BookContext {
-    private static _t: string = "books"
-    static async get(id: string) {
-        return await Get(this._t, id)
-    }
-    static async all() {
-        return await All(this._t)
-    }
-    static async where(query: { [key: string]: string }) {
-        return await Where(this._t, query);
-    }
-    static async create(params: Book) {
-        return await Create(this._t, params.getFields())
+class BookContext extends DBContext {
+    static _t: string = "books"
 
-    }
     static async update(id: number, params: Book) {
         return await Update<Book>(this._t, id, params)
     }
