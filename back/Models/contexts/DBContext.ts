@@ -1,6 +1,6 @@
 import { Get, All, Where } from "../interfaces/accessors"
 import { Create, Update, Delete } from "../interfaces/mutators"
-import { iResource } from "../../types/modelTypes"
+import { iResource, tIndex } from "../../types/modelTypes"
 
 class DBContext {
     public static _t: string = ""
@@ -10,7 +10,7 @@ class DBContext {
     static async all() {
         return await All(this._t)
     }
-    static async where(query: { [key: string]: string }) {
+    static async where(query: tIndex) {
         return await Where(this._t, query);
     }
     static async create(params: iResource) {

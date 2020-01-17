@@ -4,6 +4,7 @@ import { CreateTable, GetResource, Seed, CreateResource as _createResource } fro
 import db from "./DB";
 
 import { columnOps as parserOps } from "./schema"
+import { tIndex } from "../types/modelTypes";
 
 
 
@@ -46,7 +47,7 @@ async function getWhere(table: string, query: string) {
     })
 }
 
-async function CreateResource(table: string, params: { [key: string]: string | boolean | number }) {
+async function CreateResource(table: string, params: tIndex) {
     console.log("DBLAYER")
     return await db.do(async cxn => {
         console.log("INSERT INTO ", table);
@@ -57,7 +58,7 @@ async function CreateResource(table: string, params: { [key: string]: string | b
 }
 
 
-function parseObject(params: { [key: string]: string | boolean | number }) {
+function parseObject(params: tIndex) {
     const ret: { columns: string, values: string } = { columns: "", values: "" };
     const keys = Object.keys(params)
     for (let x = 0; x < keys.length; x++) {

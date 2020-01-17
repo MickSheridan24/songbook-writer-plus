@@ -1,13 +1,17 @@
 import express from "express";
-import Songs from "../Models/Songs";
+import Song from "../Models/Songs";
+import Songs from "../Models/contexts/SongContext"
 const router = express.Router();
 
-// router.get("/:id", (req, res) => {
-//   Songs.get(parseInt(req.params.id)).then(r =>
-//     res.send(r)
-//   );
-// });
-// router.use("/", (req, res, next) => {
-//   next();
-// });
+router.get("/:id", async (req, res) => {
+    const song = await Songs.get(req.params.id)
+    res.send(song)
+});
+
+// router.get("/", async (req, res) => {
+//     const songs = await Songs.all(req.params.id)
+// })
+router.use("/", (req, res, next) => {
+    next();
+});
 export default router;

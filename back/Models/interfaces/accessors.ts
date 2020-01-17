@@ -1,4 +1,5 @@
 import { getResource, getAll, getWhere } from "../../db/Client"
+import { tIndex } from "../../types/modelTypes"
 
 
 
@@ -12,11 +13,11 @@ const All = async (table: string) => {
     return await getAll(table)
 }
 
-const Where = async (table: string, query: { [key: string]: string }) => {
+const Where = async (table: string, query: tIndex) => {
     return await getWhere(table, _processQuery(query))
 }
 
-const _processQuery = (q: { [key: string]: string }) => {
+const _processQuery = (q: tIndex) => {
     let ret = "";
     for (let i = 0; i < Object.keys(q).length; i++) {
         if (i != 0) ret += " AND ";

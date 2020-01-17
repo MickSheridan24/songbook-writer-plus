@@ -6,7 +6,7 @@ import Song from "../Models/Songs";
 
 
 
-type tIndex = { [_: string]: string | number | boolean }
+type tIndex = { [_: string]: string | number | boolean | undefined }
 
 interface iResource {
     _fields: tIndex

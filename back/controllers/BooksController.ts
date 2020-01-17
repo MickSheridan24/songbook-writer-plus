@@ -1,34 +1,28 @@
-import express from "express";
 import BookDB from "../Models/contexts/BookContext"
-import Book from "../Models/Book";
+import { tIndex, Book } from "../types/modelTypes";
 
-const router = express.Router();
 
-router.get("/", async (req, res) => {
-  const books = await BookDB.all();
-  res.send(books);
-});
-router.get("/search", async (req, res) => {
+class BooksController {
 
-  debugger;
-  const books = await BookDB.where(req.query);
-  res.send(books)
-})
-router.get("/:id", async (req, res) => {
-  const book = await BookDB.get(req.params.id);
-  res.send(book);
-});
+  static async All() {
+    const books = await BookDB.all();
+    return books
+  }
 
-router.post("/", async (req, res) => {
-  console.log("CONTROLLER")
-  debugger
-  let book = new Book(req.body)
-  await BookDB.create(book)
-  res.send(book)
-});
+  static async Where(query: tIndex) {
+    const books = await BookDB.where(query);
+    return books
+  }
 
-// router.delete("/:id", async (req, res) => {
-//   const book = await Books.delete(req.params.id);
-// });
+  static async Get(id: string) {
+    const book = await BookDB.get(id)
+    return book
+  }
 
-export default router;
+  static async Create(params: tIndex) {
+    let book = new Book(params)
+    return await BookDB.create(book)
+  }
+}
+
+export default BooksController

@@ -40,6 +40,8 @@ async function fetchStub(stubName: string, insert = "invalid"): Promise<string> 
       const fields = await checkTableTypes(insert)
       itemName = "create_table_" + insert;
       return stubs.createTable(insert, fields);
+    case "update":
+
     default: return new Promise<string>((res, rj) => res("async function up(cxn) { }\n async function down(cxn) { } \n module.exports = { up: up, down: down }; "));
   }
 }
