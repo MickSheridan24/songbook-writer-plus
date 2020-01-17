@@ -1,12 +1,17 @@
-import { getResource } from "../db/Client"
+
+import { tIndex, iResource } from "../types/modelTypes"
 
 
+abstract class BaseResource implements iResource {
+    static tableName: string = "";
+    public _fields: tIndex
 
-class BaseResource<T> {
-    static tableName: string
-    fields: T
-    constructor(params: T) {
-        this.fields = params;
+    constructor(params: tIndex) {
+        this._fields = params;
+
+    }
+    getFields(): tIndex {
+        return this._fields;
     }
 }
 

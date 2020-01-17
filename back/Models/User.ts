@@ -1,14 +1,12 @@
 import Base from "./BaseModel"
-import { Get } from "./interfaces/accessors"
+import { Get, All, Where } from "./interfaces/accessors"
+import { Create, Update, Delete } from "./interfaces/mutators"
 
-type _user = {
-  id: number;
-  username: string;
-  passwordDigest: string;
-}
-class User extends Base<_user> {
+type index = { [_: string]: string | number | boolean }
+
+class User extends Base {
   static tableName = "users"
-  constructor(params: _user) {
+  constructor(params: index) {
     super(params)
   }
 

@@ -1,18 +1,13 @@
+import Base from "./BaseModel"
+import { Get, All, Where } from "./interfaces/accessors"
+import { Create, Update, Delete } from "./interfaces/mutators"
 
-import Base from "./BaseModel";
-import { Get } from "./interfaces/accessors"
+type index = { [_: string]: string | number | boolean }
 
-interface _song {
-  id: number;
-  title: string;
-  userId: number;
-  artist: string;
-  text: string;
-};
 
-class Song extends Base<_song>{
+class Song extends Base {
   static tableName = "songs"
-  constructor(params: _song) {
+  constructor(params: index) {
     super(params);
   }
 

@@ -1,18 +1,14 @@
 import Base from "./BaseModel"
-import { Get } from "./interfaces/accessors"
+import { Get, All, Where } from "./interfaces/accessors"
+import { Create, Update, Delete } from "./interfaces/mutators"
 
-type _chord = {
-  note: string;
-  aspect: string;
-  noteNum: number;
-  line: number;
-  character: number;
-}
+type index = { [_: string]: string | number | boolean }
 
 
-class Chords extends Base<_chord>{
+
+class Chords extends Base {
   static tableName = "chords"
-  constructor(params: _chord) {
+  constructor(params: index) {
     super(params)
   }
 
