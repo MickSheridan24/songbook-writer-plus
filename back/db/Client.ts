@@ -1,6 +1,6 @@
 import { Cxn } from "../types/dbtypes";
 
-import { CreateTable, GetResource, Seed, CreateResource as _createResource } from "./util/sqlScripts";
+import { CreateTable, GetResource, Seed, CreateResource as _createResource, AddColumn } from "./util/sqlScripts";
 import db from "./DB";
 
 import { columnOps as parserOps } from "./schema"
@@ -18,11 +18,15 @@ async function seed() {
 
 
 async function createTable(cxn: Cxn, name: string, columnCB: (_: ColumnParser) => void) {
-
     let cp = new ColumnParser();
     columnCB(cp);
     let columns = cp.parse();
     await cxn.any(CreateTable, [name, columns]).catch(e => log("createTable", e))
+}
+async function addColumn(cxn: Cxn, table: string, name: string, type: string) {
+    console.log("ADD COLUMN");
+    return await cxn.any(AddColumn, [table, name, type])
+
 }
 
 async function getResource(table: string, id: string) {
@@ -135,4 +139,4 @@ function log(name: string, e: string) {
 
 
 
-export { ColumnParser, createTable, getAll, getWhere, getResource, parserOps, seed, CreateResource }
+export { ColumnParser, createTable, getAll, getWhere, getResource, parserOps, seed, CreateResource, addColumn }
