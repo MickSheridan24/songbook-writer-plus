@@ -1,6 +1,6 @@
 
 
-import songs from "./controllers/SongsController"
+import songs from "./controllers/Routers/SongRouter"
 import chords from "./controllers/ChordsController"
 import books from "./controllers/Routers/BookRouter"
 

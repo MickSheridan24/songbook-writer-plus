@@ -20,7 +20,7 @@ const schema: tSchema[] = [
         columns: <column[]>[
             column("title", "string", { notNull: true }),
             column('userId', "int", { notNull: true }),
-            column('songId', "int", { notNull: true })
+            column('songId', "int", { notNull: true }),
             column('text', "string", { notNull: true }),
             column('artist', 'string', { notNull: true })
         ]

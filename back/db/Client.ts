@@ -47,7 +47,7 @@ async function getAll(table: string) {
 async function getWhere(table: string, query: string) {
     return await db.do(async cxn => {
         console.log("GET WHERE " + query)
-        return await cxn.one(GetResource, ["*", table, query]).catch(e => log("getWhere", e))
+        return await cxn.any(GetResource, ["*", table, query]).catch(e => log("getWhere", e))
     })
 }
 

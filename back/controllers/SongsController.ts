@@ -1,17 +1,23 @@
-import express from "express";
-import Song from "../Models/Songs";
-import Songs from "../Models/contexts/SongContext"
-const router = express.Router();
+import SongDB from "../Models/contexts/SongContext"
+import { tIndex, Song } from "../types/modelTypes";
 
-router.get("/:id", async (req, res) => {
-    const song = await Songs.get(req.params.id)
-    res.send(song)
-});
 
-// router.get("/", async (req, res) => {
-//     const songs = await Songs.all(req.params.id)
-// })
-router.use("/", (req, res, next) => {
-    next();
-});
-export default router;
+class SongsController {
+
+    static async All(bookId: number) {
+        const songs = await SongDB.where({ bookId: bookId });
+        return songs
+    }
+
+    static async Get(id: string) {
+        const song = await SongDB.get(id)
+        return Song
+    }
+
+    static async Create(params: tIndex) {
+        let song = new Song(params)
+        return await SongDB.create(song)
+    }
+}
+
+export default SongsController

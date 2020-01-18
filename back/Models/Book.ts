@@ -1,5 +1,6 @@
 import Base from "./BaseModel"
 import { tIndex } from "../types/modelTypes"
+import SongDBContext from "./contexts/SongContext"
 
 export interface _book {
   [_: string]: number | string | undefined
@@ -21,7 +22,10 @@ class Book extends Base {
   }
   getSongs() {
     if (_isBook(this._fields)) {
-      const id = (<_book>this._fields).userId
+      const id = (<_book>this._fields).id
+      if (id) {
+        return SongDBContext.where({ songId: id });
+      }
     }
   }
 }
