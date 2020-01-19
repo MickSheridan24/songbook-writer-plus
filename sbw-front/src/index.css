@@ -3,3 +3,8 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.songpad{
+  height: 90% ;
+  border: 1px solid black;
+}
