@@ -9,7 +9,7 @@ class SongPad extends React.Component {
     render() {
         return (
             <div className="songpad">
-                <SongText /><Cursor />
+                <SongText />
             </div>
         )
     }

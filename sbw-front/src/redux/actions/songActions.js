@@ -1,9 +1,18 @@
 function type(key) {
-    console.log("outer")
-    return async dispatch => {
-        console.log("inner")
-        dispatch({ type: "TYPE", key: key })
-    }
+    console.log(key)
+    switch (key) {
+        case "Backspace": return { type: "BACKSPACE" }
+        case "Control": return { type: "None" }
+        case "Shift": return { type: "ShiftDown" }
 
+        default: return { type: "TYPE", key: key }
+    }
 }
-export { type }
+
+function keyUp(key) {
+    switch (key) {
+        case "Shift": return { type: "ShiftUP" }
+        default: return { type: "None" }
+    }
+}
+export { type, keyUp }

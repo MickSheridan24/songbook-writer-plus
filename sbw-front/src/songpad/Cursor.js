@@ -1,12 +1,11 @@
 import React from "react"
 import { connect } from "react-redux"
-import { type } from "../redux/actions/songActions.js"
+import { type, keyUp } from "../redux/actions/songActions.js"
 import ReactDOM from "react-dom";
 
 class Cursor extends React.Component {
 
     componentDidMount() {
-        console.log("worked")
         ReactDOM.findDOMNode(this.refs.cursor).focus();
     }
 
@@ -15,7 +14,8 @@ class Cursor extends React.Component {
             className="cursor"
             ref="cursor"
             tabIndex="0"
-            onKeyDown={(e) => this.props.type(e.key)} ></div>
+            onKeyDown={(e) => this.props.type(e.key)}
+            onKeyUp={(e) => this.props.keyUp(e.key)}></div>
     }
 }
 
@@ -28,10 +28,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        type: key => {
-            console.log("mdtp")
-            dispatch(type(key))
-        }
+        type: key => dispatch(type(key)),
+        keyUp: key => dispatch(keyUp(key))
+
     };
 }
 
