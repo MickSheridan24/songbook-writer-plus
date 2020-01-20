@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import SongPad from "./containers/Songpad"
-
+import SongPad from "./songpad/Songpad"
+import "./index.css"
 class App extends Component {
   render() {
     return (
-      <div >
+      <div className="window">
         <SongPad></SongPad>
       </div>
     );

@@ -5,19 +5,17 @@ import ReactDOM from "react-dom";
 
 class Cursor extends React.Component {
 
-    onComponentMount() {
+    componentDidMount() {
         console.log("worked")
         ReactDOM.findDOMNode(this.refs.cursor).focus();
     }
 
     render() {
-        return <div ref="cursor"
+        return <div
+            className="cursor"
+            ref="cursor"
             tabIndex="0"
-            onClick={(e) => console.log("click")}
-            onKeyDown={(e) => {
-                console.log("PRESS", e.key)
-                this.props.type(e.key)
-            }} > {this.props.song.text}</div>
+            onKeyDown={(e) => this.props.type(e.key)} ></div>
     }
 }
 
@@ -29,7 +27,12 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return { type: key => dispatch(type(key)) };
+    return {
+        type: key => {
+            console.log("mdtp")
+            dispatch(type(key))
+        }
+    };
 }
 
 

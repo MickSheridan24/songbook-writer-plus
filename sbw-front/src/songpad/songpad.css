@@ -1,0 +1,18 @@
+
+.songpad{
+    max-height: 100%;
+    padding: 2em;
+    background: #e4d6d6;
+    border: 1px solid black;
+
+  }
+  
+  .cursor{
+    border: 1px solid blue;
+    background: black;
+    display: inline;
+  }
+
+  .line{
+      display: inline;
+  }
