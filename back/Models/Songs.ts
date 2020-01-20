@@ -6,6 +6,7 @@ class Song extends Base {
   constructor(params: tIndex) {
     super(params);
   }
+
 }
 
 export default Song;
