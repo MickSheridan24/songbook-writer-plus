@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Editor, EditorState, convertToRaw } from 'draft-js'
-import { type, keyUp, saveDelta } from "../redux/actions/songActions.js"
+import { type, keyUp, saveDelta, updateSong } from "../redux/actions/songActions.js"
 
 
 
@@ -13,34 +13,21 @@ class SongText extends React.Component {
     state = {
         mounted: false,
         saving: false,
-        editorState: EditorState.createEmpty(),
     }
 
     componentDidMount() {
         this.setState({ mounted: true })
         this.editor.current.focus()
     }
-    componentDidUpdate(prevProps, prevState) {
-        if (prevState.editorState !== this.state.editorState && !this.state.saving) {
-            this.setState({ saving: true }, async () => {
-                await this.autoSave();
-                this.setState({ saving: false })
-            })
-        }
-    }
 
-    async autoSave() {
-        const content = this.state.editorState.getCurrentContent();
-        console.log(convertToRaw(content))
-    }
 
     handleChange = (editorState) => {
-        this.setState({ editorState })
+        this.props.updateSong({ text: editorState, id: this.props.id, saving: this.props.saving })
     }
 
     render() {
         return <div className="editor-wrap">
-            <Editor ref={this.editor} editorState={this.state.editorState} onChange={this.handleChange} />
+            <Editor ref={this.editor} editorState={this.props.song} onChange={this.handleChange} />
         </div>
     }
 }
@@ -48,16 +35,15 @@ class SongText extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        song: state.song
+        song: state.song.editorState,
+        saving: state.song.saving,
+        id: state.song.id
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        type: key => dispatch(type(key)),
-        keyUp: key => dispatch(keyUp(key)),
-        saveDelta: d => dispatch(saveDelta(d))
-
+        updateSong: (song) => dispatch(updateSong(song))
     };
 }
 

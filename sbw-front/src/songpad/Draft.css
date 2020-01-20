@@ -20,7 +20,7 @@
   .editor-wrap{
     font-family: monospace;
     max-width: 50%;
-    max-height: 75%;
+    max-height: 75vh;
     padding: 1rem; 
     background-color: palegoldenrod;
     border: 1px solid gray; 
