@@ -1,3 +1,7 @@
+function saveDelta(d) {
+    return { type: "DELTA", delta: d }
+}
+
 function type(key) {
     console.log(key)
     switch (key) {
@@ -15,4 +19,4 @@ function keyUp(key) {
         default: return { type: "None" }
     }
 }
-export { type, keyUp }
+export { type, keyUp, saveDelta }

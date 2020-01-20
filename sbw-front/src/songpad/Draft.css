@@ -16,3 +16,13 @@
   .line{
       display: inline;
   } */
+
+  .editor-wrap{
+    font-family: monospace;
+    max-width: 50%;
+    max-height: 75%;
+    padding: 1rem; 
+    background-color: palegoldenrod;
+    border: 1px solid gray; 
+    border-radius: 12px;
+  }
