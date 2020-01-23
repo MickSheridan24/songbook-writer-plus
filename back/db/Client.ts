@@ -1,6 +1,6 @@
 import { Cxn } from "../types/dbtypes";
 
-import { CreateTable, GetResource, Seed, CreateResource as _createResource, AddColumn } from "./util/sqlScripts";
+import { CreateTable, GetResource, Seed, CreateResource as _create, UpdateResource as _update, AddColumn } from "./util/sqlScripts";
 import db from "./DB";
 
 import { columnOps as parserOps } from "./schema"
@@ -55,14 +55,34 @@ async function CreateResource(table: string, params: tIndex) {
     console.log("DBLAYER")
     return await db.do(async cxn => {
         console.log("INSERT INTO ", table);
-        const parsed = parseObject(params);
-        debugger
-        return await cxn.any(_createResource, [table, parsed.columns, parsed.values]).catch(e => log("Create Resource", e))
+        const parsed = parseObjectForInsert(params);
+        return await cxn.any(_create, [table, parsed.columns, parsed.values]).catch(e => log("Create Resource", e))
     })
 }
 
+async function UpdateResource(table: string, id: number, params: tIndex) {
+    return await db.do(async cxn => {
+        console.log("UPDATE ", table)
+        const parsed = parseObjectForUpdate(params);
+        return await cxn.any(_update, [table, parsed, " id = " + id]).catch(e => log("Update Resource", e))
+    })
+}
 
-function parseObject(params: tIndex) {
+function parseObjectForUpdate(params: tIndex) {
+    let ret = ""
+    const keys = Object.keys(params)
+    for (let x = 0; x < keys.length; x++) {
+        if (x !== 0) ret += ","
+        ret += keys[x] + " = "
+        if (typeof params[keys[x]] === "string") ret += "'";
+        ret += params[keys[x]]
+        if (typeof params[keys[x]] === "string") ret += "'";
+    }
+    console.log(ret)
+    return ret;
+}
+
+function parseObjectForInsert(params: tIndex) {
     const ret: { columns: string, values: string } = { columns: "", values: "" };
     const keys = Object.keys(params)
     for (let x = 0; x < keys.length; x++) {
@@ -139,4 +159,4 @@ function log(name: string, e: string) {
 
 
 
-export { ColumnParser, createTable, getAll, getWhere, getResource, parserOps, seed, CreateResource, addColumn }
+export { ColumnParser, createTable, getAll, getWhere, getResource, parserOps, seed, CreateResource, UpdateResource, addColumn }

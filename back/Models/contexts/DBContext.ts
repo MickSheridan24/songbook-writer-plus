@@ -16,6 +16,9 @@ class DBContext {
     static async create(params: iResource) {
         return await Create(this._t, params.getFields())
     }
+    static async update(id: number, params: tIndex) {
+        return await Update(this._t, id, params)
+    }
 
 }
 

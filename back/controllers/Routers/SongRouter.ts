@@ -14,4 +14,9 @@ router.post("/", async (req, res) => {
     res.send(await Controller.Create(req.body))
 });
 
+router.patch("/:id", async (req, res) => {
+    console.log("RECEIVED: ", req.params.id, "\n\nBODY:", typeof req.body, req.body)
+    res.send(await Controller.Update(parseInt(req.params.id), req.body))
+})
+
 export default router;

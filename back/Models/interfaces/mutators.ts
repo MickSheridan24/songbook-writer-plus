@@ -1,4 +1,4 @@
-import { CreateResource } from "../../db/Client"
+import { CreateResource, UpdateResource } from "../../db/Client"
 import { iResource, tIndex } from "../../types/modelTypes"
 
 
@@ -9,7 +9,9 @@ const Create = async (tableName: string, params: tIndex) => {
     return await CreateResource(tableName, params);
 }
 
-const Update = <T>(table: string, id: number, params: T) => {
+const Update = async (tableName: string, id: number, params: tIndex) => {
+    console.log(params)
+    return await UpdateResource(tableName, id, params)
 
 }
 const Delete = <T>(table: string, id: number) => {

@@ -1,5 +1,6 @@
 import SongDB from "../Models/contexts/SongContext"
 import { tIndex, Song } from "../types/modelTypes";
+import { validateSongParams } from "../Models/validators/SongValidator";
 
 
 class SongsController {
@@ -17,6 +18,11 @@ class SongsController {
     static async Create(params: tIndex) {
         let song = new Song(params)
         return await SongDB.create(song)
+    }
+
+    static async Update(id: number, params: tIndex) {
+        let song = validateSongParams(params)
+        return await SongDB.update(id, song);
     }
 }
 

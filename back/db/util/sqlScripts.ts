@@ -15,5 +15,6 @@ export const GetResource = addScript("GetResource")
 export const Seed = addScript("Seed")
 export const CreateResource = addScript("CreateResource");
 export const AddColumn = addScript("AddColumn")
+export const UpdateResource = addScript("UpdateResource")
 
 

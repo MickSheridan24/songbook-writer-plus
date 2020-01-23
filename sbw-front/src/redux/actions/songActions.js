@@ -26,13 +26,18 @@ function updateSong(songState) {
     console.log("ACTION")
     const { text, id, saving } = songState
     console.log(text, id, saving)
+    let mockId = id
+    mockId = 7;
     return async (dispatch) => {
         console.log(saving)
         if (saving) {
             dispatch({ type: "SET_SAVE", saving: false })
             console.log("saving")
-            const song = convertToRaw(text.getCurrentContent())
-            fetch("http://localhost:4001/songs/" + id, {
+            const song = {
+                title: "I updated successfully",
+                text: convertToRaw(text.getCurrentContent())
+            }
+            fetch("http://localhost:4001/songs/" + mockId, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(song)
