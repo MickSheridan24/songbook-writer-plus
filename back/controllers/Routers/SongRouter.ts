@@ -7,7 +7,9 @@ router.get("/index/:bookID", async (req, res) => {
 });
 
 router.get("/:id", async (req, res, next) => {
-    res.send(await Controller.Get(req.params.id));
+    const resp = JSON.stringify(await Controller.Get(req.params.id))
+    console.log("ROUTER", resp)
+    res.send(resp);
 });
 
 router.post("/", async (req, res) => {

@@ -32,7 +32,9 @@ async function addColumn(cxn: Cxn, table: string, name: string, type: string) {
 async function getResource(table: string, id: string) {
     return await db.do(async cxn => {
         console.log("GET RESOURCE")
-        return await cxn.one(GetResource, ["*", table, `id=${id}`]).catch(e => log("getResource", e))
+        const r = await cxn.one(GetResource, ["*", table, `id=${id}`]).catch(e => log("getResource", e))
+        console.log("CLIENT", r)
+        return r
     })
 }
 

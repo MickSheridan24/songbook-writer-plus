@@ -12,7 +12,8 @@ class SongsController {
 
     static async Get(id: string) {
         const song = await SongDB.get(id)
-        return Song
+        console.log("CONTROLLER", song)
+        return song
     }
 
     static async Create(params: tIndex) {

@@ -6,7 +6,9 @@ import { tIndex } from "../../types/modelTypes"
 
 const Get = async (table: string, id: string) => {
     console.log("GET", id)
-    return await getResource(table, id)
+    const r = await getResource(table, id)
+    console.log("ACCESSOR", r)
+    return r
 }
 
 const All = async (table: string) => {

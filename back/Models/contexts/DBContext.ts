@@ -5,7 +5,9 @@ import { iResource, tIndex } from "../../types/modelTypes"
 class DBContext {
     public static _t: string = ""
     static async get(id: string) {
-        return await Get(this._t, id)
+        const r = await Get(this._t, id)
+        console.log("CONTEXT", r)
+        return r
     }
     static async all() {
         return await All(this._t)
