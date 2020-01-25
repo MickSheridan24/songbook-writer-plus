@@ -8,34 +8,31 @@ import { updateSong, fetchSong, saveSong } from "../redux/actions/songActions.js
 class SongText extends React.Component {
     constructor() {
         super()
+        this.state = {
+            editorState: EditorState.createEmpty()
+        }
         this.editor = React.createRef()
-    }
-    state = {
-        mounted: false,
-        saving: false,
     }
 
     async componentDidMount() {
-
-        await this.props.fetchSong(7);
-        await this.setState({ mounted: true })
+        await this.props.fetchSong(1)
         this.editor.current.focus()
-
     }
 
-
     handleChange = (editorState) => {
-        this.props.updateSong({ text: editorState, id: this.props.id, saving: this.props.saving })
+        console.log(editorState)
+        this.setState({ editorState })
+        this.props.updateSong(editorState)
     }
 
     handleClick = (e) => {
-        this.props.saveSong({ text: this.props.song, id: this.props.id })
+        this.props.saveSong(this.props.song, this.props.editor)
     }
 
     render() {
         return <React.Fragment>
             <div className="editor-wrap">
-                {this.state.mounted ? <Editor ref={this.editor} editorState={this.props.song.text} onChange={this.handleChange} /> : null}
+                <Editor ref={this.editor} editorState={this.props.editor} onChange={this.handleChange} />
             </div>
             <button onClick={this.handleClick}>SAVE</button>
         </React.Fragment>
@@ -46,14 +43,15 @@ class SongText extends React.Component {
 function mapStateToProps(state) {
     return {
         song: state.song,
-        id: state.song.id
+        editor: state.editor
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
         updateSong: (song) => dispatch(updateSong(song)),
-        fetchSong: (id) => dispatch(fetchSong(id))
+        fetchSong: (id) => dispatch(fetchSong(id)),
+        saveSong: (song, editor) => dispatch(saveSong(song, editor))
     };
 }
 
