@@ -34,7 +34,7 @@ async function getResource(table: string, id: string) {
         console.log("GET RESOURCE")
         const r = await cxn.one(GetResource, ["*", table, `id=${id}`]).catch(e => log("getResource", e))
         console.log("CLIENT", r)
-        return r
+        return r;
     })
 }
 

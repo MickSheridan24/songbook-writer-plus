@@ -5,7 +5,7 @@ function fetchSong(id) {
     return async dispatch => {
         const raw = await fetch("http://localhost:4001/songs/" + id, { "accepts": "application/json" })
         if (raw) {
-
+            debugger
             const parsed = await raw.json().then(r => {
                 return { ...r, text: JSON.parse(r.text) }
             })

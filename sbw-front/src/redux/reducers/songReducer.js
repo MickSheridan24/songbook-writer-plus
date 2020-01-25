@@ -5,7 +5,11 @@ function songReducer(state = { text: EditorState.createEmpty(), saving: true, id
 
         case ("SET_SONG"):
             debugger
-            return { ...action.song, saving: true }
+            const newText = action.song.text
+            const newEditor = EditorState.push(state.text, newText)
+            const ret = { ...action.song, text: newEditor, saving: true }
+            debugger
+            return ret
         case ("UPDATE"):
             return { ...state, text: action.editorState }
         case ("SET_SAVE"):

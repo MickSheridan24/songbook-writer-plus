@@ -18,7 +18,7 @@ class SongText extends React.Component {
     async componentDidMount() {
 
         await this.props.fetchSong(7);
-        this.setState({ mounted: true })
+        await this.setState({ mounted: true })
         this.editor.current.focus()
 
     }
@@ -35,7 +35,7 @@ class SongText extends React.Component {
     render() {
         return <React.Fragment>
             <div className="editor-wrap">
-                {this.props.song ? <Editor ref={this.editor} editorState={EditorState.createWithContent(this.props.song.text)} onChange={this.handleChange} /> : null}
+                {this.state.mounted ? <Editor ref={this.editor} editorState={this.props.song.text} onChange={this.handleChange} /> : null}
             </div>
             <button onClick={this.handleClick}>SAVE</button>
         </React.Fragment>
