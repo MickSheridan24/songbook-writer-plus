@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import SongPad from "./songpad/Songpad"
+import Workshop from "./containers/Workshop"
 import "./index.css"
 class App extends Component {
   render() {
     return (
       <div className="window">
-        <SongPad></SongPad>
+        <Workshop></Workshop>
       </div>
     );
   }

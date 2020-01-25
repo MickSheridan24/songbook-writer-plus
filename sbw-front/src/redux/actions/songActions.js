@@ -1,9 +1,9 @@
 
 import { convertToRaw, convertFromRaw } from "draft-js"
-
+import { API } from "../constants"
 function fetchSong(id) {
     return async dispatch => {
-        const raw = await fetch("http://localhost:4001/songs/" + id, { "accepts": "application/json" })
+        const raw = await fetch(API + "songs/" + id, { "accepts": "application/json" })
         if (raw) {
             const parsed = await raw.json()
             const song = { title: parsed.title, id: parsed.id }
@@ -22,7 +22,7 @@ function saveSong(song, editor) {
             title: "I updated successfully",
             text: convertToRaw(editor.getCurrentContent())
         }
-        await fetch("http://localhost:4001/songs/" + song.id, {
+        await fetch(API + "songs/" + song.id, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(out)
