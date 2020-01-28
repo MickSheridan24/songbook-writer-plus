@@ -9,12 +9,12 @@ class Book extends React.Component {
     }
 
     async componentDidMount() {
-        const { id } = this.props.match.id
+        const { id } = this.props.match.params.id
         await this.props.fetchBook(id)
     }
 
     getSongs() {
-        return this.props.songs.map(s => <SongCard id={s.id} title={s.title}></SongCard>)
+        return this.props.songs ? this.props.songs.map(s => <SongCard id={s.id} title={s.title}></SongCard>) : null
     }
 
     render() {
