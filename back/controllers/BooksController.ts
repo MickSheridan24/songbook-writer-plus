@@ -6,6 +6,7 @@ class BooksController {
 
   static async All() {
     const books = await BookDB.all();
+    console.log("Controller:", books)
     return books
   }
 

@@ -1,7 +1,7 @@
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
-class BookCard extends PureComponent {
+class BookCard extends Component {
     constructor(props) {
         super(props)
     }
@@ -9,6 +9,7 @@ class BookCard extends PureComponent {
     render() {
         return (
             <div>
+                Card
                 <Link to={"/books/" + this.props.id}>{this.props.title}</Link>
             </div>
         )

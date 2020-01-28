@@ -4,27 +4,25 @@ import { fetchBooks } from '../redux/actions/bookActions'
 import BookCard from "../components/BookCard"
 
 class Library extends Component {
-    constructor(props) {
-        super(props)
-    }
+
 
     async componentDidMount() {
-        if (!this.props.books.length) {
+        if (!this.props.library.books.length) {
             await this.props.fetchBooks()
         }
     }
 
-    renderBooks() {
-
-        return this.props.books ? this.props.books.map(b => {
+    renderBooks = () => {
+        return this.props.library.books.map(b => {
             return <BookCard title={b.title} id={b.id}></BookCard>
-        }) : null
+        })
     }
+
     render() {
         return (
-            <div className="library">
+            <div className="library" >
                 Library
-                {this.renderBooks()}
+                {this.props.library.books ? this.renderBooks() : null}
             </div>
         )
     }
@@ -33,7 +31,7 @@ class Library extends Component {
 
 function mapStateToProps(state) {
     return {
-        books: state.library.books
+        library: state.library
     }
 }
 
