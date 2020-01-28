@@ -15,7 +15,7 @@ class SongText extends React.Component {
     }
 
     async componentDidMount() {
-        await this.props.fetchSong(1)
+        await this.props.fetchSong(this.props.id)
         this.editor.current.focus()
     }
 
