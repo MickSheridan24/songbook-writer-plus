@@ -9,8 +9,7 @@ router.get("/search", async (req, res) => {
     res.send(await Controller.Where(req.query))
 })
 
-router.get("/:id", async (req, res, next) => {
-
+router.get("/:id", async (req, res) => {
     console.log("params", req.params.id)
     res.send(JSON.stringify(await Controller.Get(req.params.id)));
 });

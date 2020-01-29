@@ -1,6 +1,6 @@
 
 
-function songReducer(state = { title: "Untitled", id: 1 }, action) {
+function songReducer(state = { title: "Untitled" }, action) {
     switch (action.type) {
 
         case ("SET_SONG"):

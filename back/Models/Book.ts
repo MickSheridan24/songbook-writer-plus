@@ -10,6 +10,7 @@ export interface _book {
   userId: number
 }
 
+
 export function _isBook(params: tIndex): params is _book {
   return (!!params.title && !!params.year && !!params.userId)
 }
@@ -19,14 +20,17 @@ class Book extends Base {
   public tableName: string = "books"
   constructor(params: tIndex) {
     super(params)
+
   }
-  getSongs() {
-    if (_isBook(this._fields)) {
-      const id = (<_book>this._fields).id
-      if (id) {
-        return SongDBContext.where({ songId: id });
-      }
+  async getSongs() {
+    const id = (<_book>this._fields).id
+    if (id) {
+      return await SongDBContext.where({ bookId: id });
     }
+
+  }
+  async serialized() {
+    return { ...this._fields, songs: await this.getSongs() }
   }
 }
 

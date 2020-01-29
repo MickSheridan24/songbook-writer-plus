@@ -24,7 +24,10 @@ const _processQuery = (q: tIndex) => {
     for (let i = 0; i < Object.keys(q).length; i++) {
         if (i != 0) ret += " AND ";
         let key = Object.keys(q)[i];
-        ret += key + "= '" + q[key] + "'";
+        ret += key + " = "
+        if (typeof q[key] === "string") ret += "'"
+        ret += q[key]
+        if (typeof q[key] === "string") ret += "'"
     }
     return ret;
 }

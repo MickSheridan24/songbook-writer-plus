@@ -16,8 +16,9 @@ class BooksController {
   }
 
   static async Get(id: string) {
-    const book = await BookDB.get(id)
-    return book
+    const fields = await BookDB.get(id)
+    const book = new Book(fields)
+    return await book.serialized()
   }
 
   static async Create(params: tIndex) {

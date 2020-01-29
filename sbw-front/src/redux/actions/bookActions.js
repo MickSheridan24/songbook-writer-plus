@@ -9,7 +9,9 @@ function fetchBooks() {
 
 function fetchBook(id) {
     return async (dispatch) => {
+
         const book = await fetch(API + "books/" + id).then(r => r.json())
+        debugger
         dispatch({ type: "SET_BOOK", book: book, songs: [...book.songs] })
     }
 }

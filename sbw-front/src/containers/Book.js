@@ -9,7 +9,7 @@ class Book extends React.Component {
     }
 
     async componentDidMount() {
-        const { id } = this.props.match.params.id
+        const id = this.props.match.params.id
         await this.props.fetchBook(id)
     }
 
