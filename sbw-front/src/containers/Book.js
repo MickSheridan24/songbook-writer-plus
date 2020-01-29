@@ -19,14 +19,16 @@ class Book extends React.Component {
         await this.props.fetchBook(id)
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        return nextProps.songs.length !== this.props.songs.length || this.state.createForm !== nextState.createForm
+    }
+
     getSongs() {
         return this.props.songs ? this.props.songs.map(s => <SongCard key={s.id} id={s.id} title={s.title}></SongCard>) : null
     }
 
     toggleCreate = (b) => {
-        if (b) {
-            this.setState({ createForm: b })
-        }
+        this.setState({ createForm: b })
     }
     render() {
         return (
@@ -35,7 +37,8 @@ class Book extends React.Component {
                     {this.getSongs()}
                 </div>
                 {this.state.createForm ?
-                    <CreateSong create={(params) => this.props.createSong({ ...params, bookId: this.state.id })}
+                    <CreateSong
+                        create={(params) => this.props.createSong({ ...params, bookId: this.state.id })}
                         cancel={() => this.toggleCreate(false)} bookid={this.state.id} />
                     : <button onClick={() => this.toggleCreate(true)}>NEW</button>}
             </React.Fragment>

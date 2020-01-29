@@ -15,7 +15,7 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-    res.send(await Controller.Create(req.body))
+    res.send(JSON.stringify(await Controller.Create(req.body)))
 });
 
 export default router;

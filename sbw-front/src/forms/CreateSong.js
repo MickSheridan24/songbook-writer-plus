@@ -1,13 +1,17 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React from 'react'
 
-class CreateSong extends Component {
+class CreateSong extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             title: "Untitled",
             artist: ""
         }
+    }
+    handleCreate = () => {
+        this.props.create({ title: this.state.title, artist: this.state.artist })
+        this.props.cancel()
+
     }
 
     render() {
@@ -17,20 +21,11 @@ class CreateSong extends Component {
                     onChange={e => this.setState({ title: e.target.value })}></input>
                 <input value={this.state.artist}
                     onChange={e => this.setState({ artist: e.target.value })}></input>
-                <button onClick={() => this.props.create({ title: this.state.title, artist: this.state.artist })}>Create</button>
-                <button onClick={() => this.props.cancel()}>Cancel</button>
+                <button onClick={this.handleCreate}>Create</button>
+                <button onClick={this.props.cancel}>Cancel</button>
             </div>
-
         )
     }
 }
 
-const mapStateToProps = (state) => ({
-
-})
-
-const mapDispatchToProps = (dispatch) => ({
-
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(CreateSong)
+export default CreateSong

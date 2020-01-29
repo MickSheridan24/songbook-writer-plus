@@ -5,7 +5,7 @@ function bookReducer(state = { title: "Untitled", songs: [] }, action) {
 
         case ("SET_BOOK"):
             return { ...action.book, songs: [...action.songs] }
-        case ("ADD_BOOK"):
+        case ("ADD_SONG"):
             return { ...state, songs: [...state.songs, action.song] }
 
         default: return state

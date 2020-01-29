@@ -58,7 +58,7 @@ async function CreateResource(table: string, params: tIndex) {
     return await db.do(async cxn => {
         console.log("INSERT INTO ", table);
         const parsed = parseObjectForInsert(params);
-        return await cxn.any(_create, [table, parsed.columns, parsed.values]).catch(e => log("Create Resource", e))
+        return await cxn.one(_create, [table, parsed.columns, parsed.values]).catch(e => log("Create Resource", e))
     })
 }
 

@@ -20,7 +20,6 @@ function saveSong(song, editor) {
     return async () => {
         const out = {
             ...song,
-            title: "I updated successfully",
             text: convertToRaw(editor.getCurrentContent())
         }
         await fetch(API + "songs/" + song.id, {
@@ -44,7 +43,7 @@ function createSong(params) {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(body)
-        })
+        }).then(r => r.json())
 
         if (song) {
             dispatch({ type: "ADD_SONG", song: song })

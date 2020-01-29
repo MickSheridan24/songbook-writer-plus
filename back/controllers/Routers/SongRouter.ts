@@ -13,7 +13,9 @@ router.get("/:id", async (req, res, next) => {
 });
 
 router.post("/", async (req, res) => {
-    res.send(await Controller.Create(req.body))
+    const resp = JSON.stringify(await Controller.Create(req.body))
+
+    res.send(resp)
 });
 
 router.patch("/:id", async (req, res) => {
