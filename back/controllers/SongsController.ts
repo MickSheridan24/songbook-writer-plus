@@ -17,7 +17,7 @@ class SongsController {
     }
 
     static async Create(params: tIndex) {
-        let song = new Song(params)
+        let song = new Song(validateSongParams(params))
         return await SongDB.create(song)
     }
 
