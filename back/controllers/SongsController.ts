@@ -7,13 +7,12 @@ class SongsController {
 
     static async All(bookId: number) {
         const songs = await SongDB.where({ bookId: bookId });
-        return songs
+        return songs.map((s: Song) => s.getFields())
     }
 
     static async Get(id: string) {
         const song = await SongDB.get(id)
-        console.log("CONTROLLER", song)
-        return song
+        return song ? song.getFields() : null;
     }
 
     static async Create(params: tIndex) {
@@ -22,8 +21,9 @@ class SongsController {
     }
 
     static async Update(id: number, params: tIndex) {
-        let song = validateSongParams(params)
-        return await SongDB.update(id, song);
+        let validParams = validateSongParams(params)
+        const song = await SongDB.update(id, validParams);
+        return song.getFields()
     }
 }
 
