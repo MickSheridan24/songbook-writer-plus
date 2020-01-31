@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Editor, EditorState } from 'draft-js'
+import { Editor, EditorState, Modifier } from 'draft-js'
 import { updateSong, fetchSong, saveSong, saveTitle } from "../redux/actions/songActions.js"
 
 
@@ -36,6 +36,14 @@ class SongText extends React.Component {
     handleChangeTitle = (e) => {
         this.setState({ tempTitle: e.target.value })
     }
+
+    handleTab = (e) => {
+        e.preventDefault();
+
+        const { editor } = this.props
+        const cs = Modifier.insertText(editor.getCurrentContent(), editor.getSelection(), "\t")
+        this.handleChange(EditorState.push(editor, cs, "insert-characters"))
+    }
     saveTitle = () => {
 
         console.log(this.props, this.state)
@@ -52,17 +60,18 @@ class SongText extends React.Component {
     }
 
     render() {
-        return <div className="workshop">
+        return <div className="workshop" >
             <div className="header">
                 {this.title()}
 
             </div>
             <div className="content">
                 <div className="editor-wrap" >
-                    <Editor ref={this.editor} editorState={this.props.editor} onChange={this.handleChange} />
+                    <Editor onTab={this.handleTab} ref={this.editor} editorState={this.props.editor}
+                        onChange={this.handleChange} />
                 </div>
                 <div className="utilities">
-                    <button className="save-button" onClick={this.handleClick}>SAVE</button>
+                    <button tabindex={-1} className="save-button" onClick={this.handleClick}>SAVE</button>
                 </div>
             </div>
         </div >
