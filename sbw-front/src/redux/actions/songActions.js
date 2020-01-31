@@ -1,6 +1,7 @@
 
 import { convertToRaw, convertFromRaw } from "draft-js"
 import { API } from "../constants"
+import { toClean } from "../utilities/textPrepper"
 import { EditorState } from "draft-js"
 function fetchSong(id) {
     return async dispatch => {
@@ -22,10 +23,12 @@ function saveSong(song, editor) {
             ...song,
             text: convertToRaw(editor.getCurrentContent())
         }
+        const body = JSON.stringify(out)
+        const send = toClean(body)
         await fetch(API + "songs/" + song.id, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(out)
+            body: send
         });
         if (song) {
             console.log("Saved successfully")
