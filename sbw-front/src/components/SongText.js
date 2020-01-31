@@ -36,8 +36,11 @@ class SongText extends React.Component {
     handleChangeTitle = (e) => {
         this.setState({ tempTitle: e.target.value })
     }
-    saveTitle = (e) => {
-        this.props.saveTitle(this.state.tempTitle, this.props.song.id)
+    saveTitle = () => {
+
+        console.log(this.props, this.state)
+        debugger
+        this.props.saveTitle(this.state.tempTitle, this.props.id)
         this.setState({ editTitle: false })
     }
     title = () => {
@@ -72,7 +75,7 @@ function mapDispatchToProps(dispatch) {
         updateSong: (song) => dispatch(updateSong(song)),
         fetchSong: (id) => dispatch(fetchSong(id)),
         saveSong: (song, editor) => dispatch(saveSong(song, editor)),
-        saveTitle: (title) => dispatch(saveTitle(title))
+        saveTitle: (title, id) => dispatch(saveTitle(title, id))
     };
 }
 
