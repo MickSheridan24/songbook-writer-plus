@@ -2,12 +2,50 @@
   max-height: 100vh;
 }
 
+.workshop{
+  /* border: 1px solid red; */
+  min-height: 95vh;
+  max-height: 100vh;
+  display: flex; 
+  flex-direction: column;
+}
+.header{
+  flex: 1;
+
+  height: 10%;
+ /* border: 1px solid blue;*/
+  display: flex;
+}
+.header .title{
+  flex: 1;
+  display: inline-block;
+  /* border: 1px solid pink; */
+  align-self: center;
+  text-align: center;
+}
+.save-button{
+  flex: 1;
+  /* border: 1px solid green; */
+  display: inline-block;
+  align-self: right;
+}
+.content{
+  flex: 14;
+  display: flex;
+}
+.utilities{
+  flex: 1; 
+}
+
 .editor-wrap{
+  flex: 1; 
   font-family: monospace;
-  max-width: 50%;
-  max-height: 75vh;
   padding: 1rem; 
   background-color: palegoldenrod;
   border: 1px solid gray; 
   border-radius: 12px;
+  overflow: scroll;
+}
+.editor-wrap::-webkit-scrollbar {
+  display: none;
 }

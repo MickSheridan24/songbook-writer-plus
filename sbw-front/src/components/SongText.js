@@ -47,18 +47,25 @@ class SongText extends React.Component {
         if (!this.state.editTitle) {
             return <div className="title" onDoubleClick={this.handleDouble}>{this.props.song.title}</div>
         } else {
-            return <input value={this.state.tempTitle} onBlur={this.saveTitle} onChange={this.handleChangeTitle}></input>
+            return <input className="title edit" value={this.state.tempTitle} onBlur={this.saveTitle} onChange={this.handleChangeTitle}></input>
         }
     }
 
     render() {
-        return <React.Fragment>
-            {this.title()}
-            <div className="editor-wrap">
-                <Editor ref={this.editor} editorState={this.props.editor} onChange={this.handleChange} />
+        return <div className="workshop">
+            <div className="header">
+                {this.title()}
+
             </div>
-            <button onClick={this.handleClick}>SAVE</button>
-        </React.Fragment>
+            <div className="content">
+                <div className="editor-wrap" >
+                    <Editor ref={this.editor} editorState={this.props.editor} onChange={this.handleChange} />
+                </div>
+                <div className="utilities">
+                    <button className="save-button" onClick={this.handleClick}>SAVE</button>
+                </div>
+            </div>
+        </div >
     }
 }
 
