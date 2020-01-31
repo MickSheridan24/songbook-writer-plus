@@ -55,4 +55,19 @@ function createSong(params) {
 function updateSong(editor) {
     return { type: "UPDATE", editorState: editor }
 }
-export { updateSong, fetchSong, saveSong, createSong }
+
+function saveTitle(title, id) {
+    return async (dispatch) => {
+        const body = { title: title }
+        const song = await fetch(API + "songs/" + id, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body)
+        }).then(r => r.json())
+        if (song) {
+            dispatch({ type: "SET_TITLE", title: title })
+        }
+
+    }
+}
+export { updateSong, fetchSong, saveSong, createSong, saveTitle }

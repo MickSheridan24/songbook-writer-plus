@@ -22,6 +22,7 @@ class SongsController {
 
     static async Update(id: number, params: tIndex) {
         let validParams = validateSongParams(params)
+        console.log(id, params)
         const song = await SongDB.update(id, validParams);
         return song.getFields()
     }

@@ -6,13 +6,12 @@ class BooksController {
 
   static async All() {
     const books = await BookDB.all();
-    console.log("Controller:", books)
-    return books
+    return books.map((b: Book) => b.getFields())
   }
 
   static async Where(query: tIndex) {
     const books = await BookDB.where(query);
-    return books
+    return books.map((b: Book) => b.getFields())
   }
 
   static async Get(id: string) {

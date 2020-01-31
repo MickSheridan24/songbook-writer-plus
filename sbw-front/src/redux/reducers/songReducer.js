@@ -4,9 +4,9 @@ function songReducer(state = { title: "Untitled" }, action) {
     switch (action.type) {
 
         case ("SET_SONG"):
-            const ret = { ...action.song }
-            return ret
-
+            return { ...action.song }
+        case ("SET_TITLE"):
+            return { ...state, title: action.title }
         default: return state
     }
 }

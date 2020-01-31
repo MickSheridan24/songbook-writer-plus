@@ -1,5 +1,6 @@
 import { Get, All, Where } from "../interfaces/accessors"
 import { Create, Update, Delete } from "../interfaces/mutators"
+import Song from "../Song"
 import { iResource, tIndex } from "../../types/modelTypes"
 import BaseModel from "../BaseModel"
 
@@ -21,7 +22,8 @@ class DBContext {
         return await Create(this._t, params.getFields())
     }
     static async update(id: number, params: tIndex) {
-        return await Update(this._t, id, params)
+        const updated = await Update(this._t, id, params)
+        return new Song(updated)
     }
 
     static returnModel(fields: tIndex): BaseModel | null {

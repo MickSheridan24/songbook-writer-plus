@@ -9,7 +9,7 @@ class SongCard extends PureComponent {
     render() {
         return (
 
-            <div className="songcard">
+            <div key={this.props.id} className="songcard">
                 <Link to={"/songs/" + this.props.id}>
                     {this.props.title}
                 </Link>

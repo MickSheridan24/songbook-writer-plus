@@ -19,6 +19,7 @@ router.post("/", async (req, res) => {
 });
 
 router.patch("/:id", async (req, res) => {
+    debugger
     console.log("RECEIVED: ", req.params.id, "\n\nBODY:", typeof req.body, req.body)
     res.send(await Controller.Update(parseInt(req.params.id), req.body))
 })

@@ -8,8 +8,7 @@ class BookCard extends Component {
 
     render() {
         return (
-            <div>
-                Card
+            <div key={this.props.id}>
                 <Link to={"/books/" + this.props.id}>{this.props.title}</Link>
             </div>
         )

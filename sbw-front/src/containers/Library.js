@@ -21,7 +21,7 @@ class Library extends Component {
     render() {
         return (
             <div className="library" >
-                Library
+
                 {this.props.library.books ? this.renderBooks() : null}
             </div>
         )
