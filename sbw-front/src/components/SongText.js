@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Editor, EditorState, Modifier, RichUtils, getDefaultKeyBinding, KeyBindingUtil } from 'draft-js'
 const { hasCommandModifier } = KeyBindingUtil;
 import { updateSong, fetchSong, saveSong, saveTitle } from "../redux/actions/songActions.js"
+import { activateChordForm, deactivateChordForm } from "../redux/actions/UIActions.js"
 
 
 
@@ -29,8 +30,12 @@ class SongText extends React.Component {
 
         const currState = this.props.editor.getCurrentContent()
         const newState = editorState.getCurrentContent();
-        if (currState === newState && !editorState.getSelection().isCollapsed()) {
-            debugger
+        if (currState === newState) {
+            if (!editorState.getSelection().isCollapsed()) {
+                this.props.activateChordForm()
+            } else if (this.props.UI.chordForm.active) {
+                this.props.deactivateChordForm()
+            }
         }
         this.setState({ editorState })
         this.props.updateSong(editorState)
@@ -123,7 +128,8 @@ class SongText extends React.Component {
 function mapStateToProps(state) {
     return {
         song: state.song,
-        editor: state.editor
+        editor: state.editor,
+        UI: state.workshop
     }
 }
 
@@ -132,7 +138,9 @@ function mapDispatchToProps(dispatch) {
         updateSong: (song) => dispatch(updateSong(song)),
         fetchSong: (id) => dispatch(fetchSong(id)),
         saveSong: (song, editor) => dispatch(saveSong(song, editor)),
-        saveTitle: (title, id) => dispatch(saveTitle(title, id))
+        saveTitle: (title, id) => dispatch(saveTitle(title, id)),
+        activateChordForm: () => dispatch(activateChordForm()),
+        deactivateChordForm: () => dispatch(deactivateChordForm())
     };
 }
 
