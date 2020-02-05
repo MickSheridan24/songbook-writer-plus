@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Editor, EditorState, Modifier } from 'draft-js'
+import { Editor, EditorState, Modifier, RichUtils, getDefaultKeyBinding, KeyBindingUtil } from 'draft-js'
+const { hasCommandModifier } = KeyBindingUtil;
 import { updateSong, fetchSong, saveSong, saveTitle } from "../redux/actions/songActions.js"
 
 
@@ -22,7 +23,15 @@ class SongText extends React.Component {
     }
 
     handleChange = (editorState) => {
+
+
         console.log(editorState)
+
+        const currState = this.props.editor.getCurrentContent()
+        const newState = editorState.getCurrentContent();
+        if (currState === newState && !editorState.getSelection().isCollapsed()) {
+            debugger
+        }
         this.setState({ editorState })
         this.props.updateSong(editorState)
     }
@@ -37,6 +46,33 @@ class SongText extends React.Component {
         this.setState({ tempTitle: e.target.value })
     }
 
+    handleTextDouble = (e) => {
+        e.preventDefault();
+
+        const { editor } = this.props
+        const cs = RichUtils.toggleInlineStyle(editor, "BOLD")
+        debugger
+        this.handleChange(cs)
+    }
+    bindKeys = (e) => {
+        if (e.key === "r" && hasCommandModifier(e)) {
+            return "chord-menu"
+        }
+        return getDefaultKeyBinding(e)
+    }
+
+
+    handleKeyCommand = (command, editorState) => {
+        if (command === "chord-menu") {
+            debugger
+        }
+        const newState = RichUtils.handleKeyCommand(editorState, command)
+        if (newState) {
+            this.handleChange(newState)
+            return 'handled'
+        }
+        return 'not-handled'
+    }
     handleTab = (e) => {
         e.preventDefault();
 
@@ -67,7 +103,12 @@ class SongText extends React.Component {
             </div>
             <div className="content">
                 <div className="editor-wrap" >
-                    <Editor onTab={this.handleTab} ref={this.editor} editorState={this.props.editor}
+                    <Editor keyBindingFn={this.bindKeys}
+                        handleKeyCommand={this.handleKeyCommand}
+                        onDoubleClick={() => this.handleKeyCommand("chord-menu", this.props.editor)}
+                        onTab={this.handleTab}
+                        ref={this.editor}
+                        editorState={this.props.editor}
                         onChange={this.handleChange} />
                 </div>
                 <div className="utilities">
