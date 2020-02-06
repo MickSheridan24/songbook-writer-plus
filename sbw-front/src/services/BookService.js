@@ -5,6 +5,5 @@ export const getAllBooks = async () => {
 }
 
 export const getBook = async (id) => {
-    debugger
     return await fetch(API_PATH + "books/" + id).then(r => r.json())
 }

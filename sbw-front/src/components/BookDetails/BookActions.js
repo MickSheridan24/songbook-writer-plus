@@ -6,12 +6,10 @@ export function createSong(params) {
         const blank = EditorState.createEmpty()
         const text = convertToRaw(blank.getCurrentContent())
         const body = { ...params, text: text, userId: 25 }
-
         const song = await API.createSong(body)
         if (song) {
             dispatch({ type: "ADD_SONG", song: song })
         }
-
     }
 }
 
