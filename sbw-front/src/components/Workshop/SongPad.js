@@ -5,7 +5,12 @@ const { hasCommandModifier } = KeyBindingUtil;
 import * as Actions from "./WorkshopActions"
 
 
-
+const styleMap = {
+    "SPACE": {
+        lineheight: '3rem',
+        color: 'red'
+    }
+}
 
 class SongText extends React.Component {
     constructor(props) {
@@ -13,7 +18,6 @@ class SongText extends React.Component {
         this.state = {
             editTitle: false,
             tempTitle: this.props.song.title,
-            editorState: EditorState.createEmpty()
         }
         this.editor = React.createRef()
     }
@@ -24,22 +28,34 @@ class SongText extends React.Component {
     }
 
     handleChange = (editorState) => {
-
-
-        console.log(editorState)
-
         const currState = this.props.editor.getCurrentContent()
         const newState = editorState.getCurrentContent();
+
+        console.log("HandleChange")
+
         if (currState === newState) {
+
+            console.log("SELECTION Change")
+
             if (!editorState.getSelection().isCollapsed()) {
+                console.log("SELECTION")
+                debugger
                 this.props.activateChordForm()
-            } else if (this.props.UI.chordForm.active) {
-                this.props.deactivateChordForm()
+                const cs = Modifier.applyInlineStyle(newState, editorState.getSelection(), 'SPACE')
+                const es = EditorState.push(editorState, cs, "change-style")
+                debugger
+                this.props.updateSong(es)
+            } else {
+                if (this.props.UI.chordForm.active) this.props.deactivateChordForm()
+                this.props.updateSong(editorState)
             }
+        } else {
+            this.props.updateSong(editorState)
         }
-        this.setState({ editorState })
-        this.props.updateSong(editorState)
+
+
     }
+
 
     handleClick = (e) => {
         this.props.saveSong(this.props.song, this.props.editor)
@@ -113,6 +129,7 @@ class SongText extends React.Component {
                         onDoubleClick={() => this.handleKeyCommand("chord-menu", this.props.editor)}
                         onTab={this.handleTab}
                         ref={this.editor}
+                        customStyleMap={styleMap}
                         editorState={this.props.editor}
                         onChange={this.handleChange} />
                 </div>
