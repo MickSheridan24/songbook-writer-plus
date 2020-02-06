@@ -1,14 +1,16 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Editor, EditorState, Modifier, RichUtils, getDefaultKeyBinding, KeyBindingUtil } from 'draft-js'
+import { Editor, ContentState, EditorState, Modifier, RichUtils, getDefaultKeyBinding, KeyBindingUtil, ContentBlock, genKey } from 'draft-js'
 const { hasCommandModifier } = KeyBindingUtil;
 import * as Actions from "./WorkshopActions"
+import "./workshopStyle.css"
 
 
 const styleMap = {
     "SPACE": {
-        lineheight: '3rem',
-        color: 'red'
+        "line-height": '2rem',
+        color: 'red',
+        "vertical-align": "text-top"
     }
 }
 
@@ -27,6 +29,34 @@ class SongText extends React.Component {
         this.editor.current.focus()
     }
 
+    insertLine(selectionState, contentState) {
+        debugger
+        const key = selectionState.getAnchorKey()
+        const blockMap = contentState.getBlockMap().map(b => {
+            if (b.key == key) {
+                return new ContentBlock({
+                    key: key,
+                    text: b.text,
+                    type: 'expand',
+                });
+            }
+            return b;
+        });
+        debugger
+        return contentState.merge({
+            blockMap: blockMap
+        })
+    }
+    handlePastedText = (text) => {
+        const editorState = this.props.editor;
+        const pastedBlocks = ContentState.createFromText(text).blockMap;
+        const newState = Modifier.replaceWithFragment(
+            editorState.getCurrentContent(),
+            editorState.getSelection(),
+            pastedBlocks
+        );
+        this.handleChange(EditorState.push(editorState, newState, 'insert-fragment'));
+    }
     handleChange = (editorState) => {
         const currState = this.props.editor.getCurrentContent()
         const newState = editorState.getCurrentContent();
@@ -41,9 +71,12 @@ class SongText extends React.Component {
                 console.log("SELECTION")
                 debugger
                 this.props.activateChordForm()
-                const cs = Modifier.applyInlineStyle(newState, editorState.getSelection(), 'SPACE')
-                const es = EditorState.push(editorState, cs, "change-style")
+                const cs = this.insertLine(editorState.getSelection(), newState)
+                //Modifier.applyInlineStyle(newState, editorState.getSelection(), 'SPACE')
                 debugger
+                const es = EditorState.push(editorState, cs, "change-style")
+
+
                 this.props.updateSong(es)
             } else {
                 if (this.props.UI.chordForm.active) this.props.deactivateChordForm()
@@ -94,6 +127,13 @@ class SongText extends React.Component {
         }
         return 'not-handled'
     }
+
+    getBlockStyle(contentBlock) {
+        const type = contentBlock.getType();
+        if (type === "expand") {
+            return "lineWithChords"
+        }
+    }
     handleTab = (e) => {
         e.preventDefault();
 
@@ -125,6 +165,8 @@ class SongText extends React.Component {
             <div className="content">
                 <div className="editor-wrap" >
                     <Editor keyBindingFn={this.bindKeys}
+                        handlePastedText={this.handlePastedText}
+                        blockStyleFn={this.getBlockStyle}
                         handleKeyCommand={this.handleKeyCommand}
                         onDoubleClick={() => this.handleKeyCommand("chord-menu", this.props.editor)}
                         onTab={this.handleTab}
