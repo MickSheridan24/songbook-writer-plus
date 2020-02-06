@@ -1,5 +1,10 @@
-.lineWithChords{
+.expand{
     line-height: 2rem;
     color: red;
     vertical-align: text-top;
+}
+
+.verse{
+    margin: 0.5rem;
+    color: green; 
 }

@@ -6,14 +6,6 @@ import * as Actions from "./WorkshopActions"
 import "./workshopStyle.css"
 
 
-const styleMap = {
-    "SPACE": {
-        "line-height": '2rem',
-        color: 'red',
-        "vertical-align": "text-top"
-    }
-}
-
 class SongText extends React.Component {
     constructor(props) {
         super(props)
@@ -49,18 +41,26 @@ class SongText extends React.Component {
     }
     handlePastedText = (text) => {
         const editorState = this.props.editor;
-        const pastedBlocks = ContentState.createFromText(text).blockMap;
+        const pastedBlocks = ContentState.createFromText(text).blockMap.map(b => new ContentBlock({
+            key: b.key,
+            text: b.text,
+            type: 'verse'
+        }));
+        debugger
         const newState = Modifier.replaceWithFragment(
             editorState.getCurrentContent(),
             editorState.getSelection(),
             pastedBlocks
         );
+        debugger
         this.handleChange(EditorState.push(editorState, newState, 'insert-fragment'));
     }
     handleChange = (editorState) => {
         const currState = this.props.editor.getCurrentContent()
         const newState = editorState.getCurrentContent();
-
+        const currSelection = this.props.editor.getSelection();
+        const newSelection = editorState.getSelection();
+        debugger
         console.log("HandleChange")
 
         if (currState === newState) {
@@ -82,7 +82,8 @@ class SongText extends React.Component {
                 if (this.props.UI.chordForm.active) this.props.deactivateChordForm()
                 this.props.updateSong(editorState)
             }
-        } else {
+        } else if (currSelection !== newSelection) {
+            debugger
             this.props.updateSong(editorState)
         }
 
@@ -130,8 +131,12 @@ class SongText extends React.Component {
 
     getBlockStyle(contentBlock) {
         const type = contentBlock.getType();
-        if (type === "expand") {
-            return "lineWithChords"
+        debugger
+        switch (type) {
+            case "expand":
+                return "expand";
+            case "verse":
+                return "verse";
         }
     }
     handleTab = (e) => {
@@ -171,7 +176,6 @@ class SongText extends React.Component {
                         onDoubleClick={() => this.handleKeyCommand("chord-menu", this.props.editor)}
                         onTab={this.handleTab}
                         ref={this.editor}
-                        customStyleMap={styleMap}
                         editorState={this.props.editor}
                         onChange={this.handleChange} />
                 </div>
