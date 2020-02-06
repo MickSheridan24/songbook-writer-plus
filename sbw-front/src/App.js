@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Switch } from "react-router-dom";
-import Library from "./containers/Library"
-import Book from "./containers/Book"
+import Library from "./components/LibraryDetails/LibraryDetails"
+import Book from "./components/BookDetails/BookDetails"
 import Workshop from "./containers/Workshop"
 import "./index.css"
 class App extends Component {
