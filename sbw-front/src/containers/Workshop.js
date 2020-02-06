@@ -1,5 +1,4 @@
 import React from 'react'
-import SongText from '../components/SongText'
 import SongPad from "../components/Workshop/SongPad"
 
 
