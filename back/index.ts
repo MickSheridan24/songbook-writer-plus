@@ -17,6 +17,7 @@ console.log("INDEX")
 app.use("/songs", routers.songs);
 app.use("/chords", routers.chords);
 app.use("/books", routers.books);
+app.use("/users", routers.users);
 
 module.exports = app;
 

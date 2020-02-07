@@ -4,7 +4,7 @@ import Song from "../Song"
 import { iResource, tIndex } from "../../types/modelTypes"
 import BaseModel from "../BaseModel"
 
-class DBContext {
+abstract class DBContext {
     public static _t: string = ""
     static async get(id: string) {
         const r = await Get(this._t, id)
@@ -23,11 +23,11 @@ class DBContext {
     }
     static async update(id: number, params: tIndex) {
         const updated = await Update(this._t, id, params)
-        return new Song(updated)
+        return this.returnModel(updated)
     }
 
-    static returnModel(fields: tIndex): BaseModel | null {
-        return null;
+    static returnModel(fields: tIndex) {
+        return new BaseModel(fields);
     }
 
 }

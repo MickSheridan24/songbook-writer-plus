@@ -2,7 +2,7 @@
 import { tIndex, iResource } from "../types/modelTypes"
 
 
-abstract class BaseResource implements iResource {
+class BaseResource implements iResource {
     static tableName: string = "";
     public _fields: tIndex
 
