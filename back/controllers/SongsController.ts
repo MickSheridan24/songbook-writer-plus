@@ -13,6 +13,7 @@ class SongsController {
         return songs.map((s: Song) => s.getFields())
     }
 
+
     async Get(id: string) {
         const song = await this.db.get(id)
         return song ? song.getFields() : null;

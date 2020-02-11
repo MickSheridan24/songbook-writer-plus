@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
 import container from "../../container"
-const Controller = container.books();
+const Controller = container.books;
 router.get("/", async (req, res) => {
     res.send(JSON.stringify(await Controller.All()));
 });

@@ -4,12 +4,17 @@ import { tIndex } from "../../types/modelTypes";
 import bcrypt from "bcrypt";
 
 class UserContext extends DBContext {
-  _t: string = "users";
+  _t: string;
+
+  constructor() {
+    super();
+    this._t = "users"
+  }
 
 
   async login(body: tIndex): Promise<User | null> {
     var foundUser = await this.where({ userName: body.userName });
-    if (foundUser?.passwordDigest) {
+    if (foundUser.passwordDigest) {
       var success = await bcrypt.compare(
         body.password,
         foundUser.passwordDigest

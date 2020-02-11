@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
 import container from "../../container"
-const Controller = container.users();
+const Controller = container.users;
 
 
 router.get("/:id", async (req, res) => {

@@ -6,15 +6,14 @@ import UserContext from "./Models/contexts/UserContext";
 import UsersController from "./controllers/UsersController";
 
 
-const songCxt = new SongContext();
-const bookCxt = new BookContext();
-const userCxt = new UserContext();
+const songs = new SongsController(new SongContext());
+const books = new BooksController(new BookContext());
+const users = new UsersController(new UserContext());
 
 const container = {
-
-    songs: () => new SongsController(songCxt),
-    books: () => new BooksController(bookCxt),
-    users: () => new UsersController(userCxt)
+    songs: songs,
+    books: books,
+    users: users
 
 }
 

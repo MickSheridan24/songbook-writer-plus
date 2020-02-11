@@ -1,7 +1,7 @@
 import Base from "./BaseModel"
 import { tIndex } from "../types/modelTypes"
 import Song from "./Song"
-import SongDBContext from "./contexts/SongContext"
+import container from "../container"
 
 export interface _book {
   [_: string]: number | string | undefined
@@ -22,18 +22,19 @@ class Book extends Base {
   constructor(params: tIndex) {
     super(params)
 
+
   }
   async getSongs() {
     const id = (<_book>this._fields).id
     if (id) {
-      return await SongDBContext.where({ bookId: id });
+      return await container.songs.All(id);
     }
 
   }
   async serialized() {
     const songs = await this.getSongs();
 
-    return { ...this._fields, songs: songs.map((s: Song) => s.getFields()) }
+    return { ...this._fields, songs: songs }
   }
 }
 

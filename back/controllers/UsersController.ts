@@ -18,6 +18,10 @@ class UsersController {
     return user.getFields();
   }
 
+  async Login(body: tIndex) {
+    return await this.db.login(body)
+  }
+
   async Create(params: tIndex) {
     let user = new User(params);
     return await this.db.create(user);
