@@ -5,28 +5,30 @@ import { iResource, tIndex } from "../../types/modelTypes"
 import BaseModel from "../BaseModel"
 
 abstract class DBContext {
-    public static _t: string = ""
-    static async get(id: string) {
+    _t: string = ""
+
+
+    async get(id: string) {
         const r = await Get(this._t, id)
         return this.returnModel(r)
     }
-    static async all() {
+    async all() {
         const resources = await All(this._t)
         return resources.map((r: tIndex) => this.returnModel(r))
     }
-    static async where(query: tIndex) {
+    async where(query: tIndex) {
         const resources = await Where(this._t, query);
         return resources.map((r: tIndex) => this.returnModel(r))
     }
-    static async create(params: iResource) {
+    async create(params: iResource) {
         return await Create(this._t, params.getFields())
     }
-    static async update(id: number, params: tIndex) {
+    async update(id: number, params: tIndex) {
         const updated = await Update(this._t, id, params)
         return this.returnModel(updated)
     }
 
-    static returnModel(fields: tIndex) {
+    returnModel(fields: tIndex) {
         return new BaseModel(fields);
     }
 

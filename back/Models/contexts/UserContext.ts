@@ -4,12 +4,11 @@ import { tIndex } from "../../types/modelTypes";
 import bcrypt from "bcrypt";
 
 class UserContext extends DBContext {
-  static _t: string = "users";
+  _t: string = "users";
 
-  static async create(body: tIndex): Promise<User> {}
 
-  static async login(body: tIndex): Promise<User | null> {
-    var foundUser = await UserContext.where({ userName: body.userName });
+  async login(body: tIndex): Promise<User | null> {
+    var foundUser = await this.where({ userName: body.userName });
     if (foundUser?.passwordDigest) {
       var success = await bcrypt.compare(
         body.password,
@@ -22,7 +21,7 @@ class UserContext extends DBContext {
     }
     return null;
   }
-  static returnModel(fields: tIndex): User {
+  returnModel(fields: tIndex): User {
     return new User(fields);
   }
 }

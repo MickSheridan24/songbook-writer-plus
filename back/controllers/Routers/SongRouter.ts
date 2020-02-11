@@ -1,6 +1,7 @@
 import express from "express";
-import Controller from "../SongsController"
 const router = express.Router();
+import container from "../../container"
+const Controller = container.songs();
 
 router.get("/index/:bookID", async (req, res) => {
     res.send(await Controller.All(parseInt(req.params.bookID)));

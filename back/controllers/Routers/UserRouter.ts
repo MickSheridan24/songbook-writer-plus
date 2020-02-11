@@ -1,6 +1,7 @@
 import express from "express";
-import Controller from "../UsersController"
 const router = express.Router();
+import container from "../../container"
+const Controller = container.users();
 
 
 router.get("/:id", async (req, res) => {

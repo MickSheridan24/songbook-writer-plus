@@ -1,23 +1,27 @@
-import userDB from "../Models/contexts/UserContext";
+import UserDB from "../Models/contexts/UserContext";
 import User from "../Models/User";
 import { tIndex, Book } from "../types/modelTypes";
 import bcrypt from "bcrypt";
 
-class BooksController {
-  static async Update(id: number, params: tIndex) {
+class UsersController {
+  db: UserDB;
+  constructor(db: UserDB) {
+    this.db = db;
+  }
+  async Update(id: number, params: tIndex) {
     console.log(id, params);
-    const user = await userDB.update(id, params);
+    const user = await this.db.update(id, params);
     return user.getFields();
   }
-  static async Get(id: string) {
-    const user = await userDB.get(id);
+  async Get(id: string) {
+    const user = await this.db.get(id);
     return user.getFields();
   }
 
-  static async Create(params: tIndex) {
+  async Create(params: tIndex) {
     let user = new User(params);
-    return await userDB.create(user);
+    return await this.db.create(user);
   }
 }
 
-export default BooksController;
+export default UsersController;

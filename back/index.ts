@@ -1,10 +1,9 @@
 import express from "express";
 import routers from "./router";
-
+import container from "./container"
 const app = express();
-
 app.use(express.json());
-app.use("/", function(req: any, res: any, next: any) {
+app.use("/", function (req: any, res: any, next: any) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",

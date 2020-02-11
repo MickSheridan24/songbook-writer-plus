@@ -4,26 +4,29 @@ import { validateSongParams } from "../Models/validators/SongValidator";
 
 
 class SongsController {
-
-    static async All(bookId: number) {
-        const songs = await SongDB.where({ bookId: bookId });
+    db: SongDB;
+    constructor(db: SongDB) {
+        this.db = db;
+    }
+    async All(bookId: number) {
+        const songs = await this.db.where({ bookId: bookId });
         return songs.map((s: Song) => s.getFields())
     }
 
-    static async Get(id: string) {
-        const song = await SongDB.get(id)
+    async Get(id: string) {
+        const song = await this.db.get(id)
         return song ? song.getFields() : null;
     }
 
-    static async Create(params: tIndex) {
+    async Create(params: tIndex) {
         let song = new Song(validateSongParams(params))
-        return await SongDB.create(song)
+        return await this.db.create(song)
     }
 
-    static async Update(id: number, params: tIndex) {
+    async Update(id: number, params: tIndex) {
         let validParams = validateSongParams(params)
         console.log(id, params)
-        const song = await SongDB.update(id, validParams);
+        const song = await this.db.update(id, validParams);
         return song.getFields()
     }
 }

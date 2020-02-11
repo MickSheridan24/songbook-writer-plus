@@ -1,27 +1,31 @@
 import BookDB from "../Models/contexts/BookContext"
+import DBContext from "../Models/contexts/DBContext"
 import { tIndex, Book } from "../types/modelTypes";
 
 
 class BooksController {
-
-  static async All() {
-    const books = await BookDB.all();
+  db: BookDB;
+  constructor(db: BookDB) {
+    this.db = db;
+  }
+  async All() {
+    const books = await this.db.all();
     return books.map((b: Book) => b.getFields())
   }
 
-  static async Where(query: tIndex) {
-    const books = await BookDB.where(query);
+  async Where(query: tIndex) {
+    const books = await this.db.where(query);
     return books.map((b: Book) => b.getFields())
   }
 
-  static async Get(id: string) {
-    const book = await BookDB.get(id)
+  async Get(id: string) {
+    const book = await this.db.get(id)
     return await book.serialized()
   }
 
-  static async Create(params: tIndex) {
+  async Create(params: tIndex) {
     let book = new Book(params)
-    return await BookDB.create(book)
+    return await this.db.create(book)
   }
 }
 
