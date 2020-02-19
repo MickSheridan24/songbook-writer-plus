@@ -19,12 +19,11 @@ class UsersController {
   }
 
   async Login(body: tIndex) {
-    return await this.db.login(body)
+    return await this.db.login(body);
   }
 
   async Create(params: tIndex) {
-    let user = new User(params);
-    return await this.db.create(user);
+    return await this.db.create(params);
   }
 }
 
