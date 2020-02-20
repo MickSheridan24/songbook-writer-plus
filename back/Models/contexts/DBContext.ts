@@ -19,11 +19,11 @@ abstract class DBContext {
     const resources = await Where(this._t, query);
     return resources.map((r: tIndex) => this.returnModel(r));
   }
-  async create(params: tIndex) {
+  async create(params: tIndex): Promise<BaseModel | string[]> {
     const fields = await Create(this._t, params);
     if (fields) {
       return this.returnModel(fields);
-    } else return null;
+    } else return ["Creation Error"];
   }
   async update(id: number, params: tIndex) {
     const updated = await Update(this._t, id, params);

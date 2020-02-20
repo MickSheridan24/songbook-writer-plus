@@ -23,7 +23,13 @@ class UsersController {
   }
 
   async Create(params: tIndex) {
-    return await this.db.create(params);
+    const user = await this.db.create(params)
+
+    if (user instanceof User) {
+      return user.getFields();
+    } else {
+      return { message: user }
+    }
   }
 }
 
